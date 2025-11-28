@@ -85,9 +85,7 @@
       transition:0.25s ease;
     }
 
-    .thumb.unlocked .thumb-inner {
-      filter:none;
-    }
+    .thumb.unlocked .thumb-inner { filter:none; }
 
     .thumb::after {
       content:"Contenido desbloqueado ✓";
@@ -114,16 +112,48 @@
       border-radius:12px;
     }
 
-    /* FORMULARIO */
-    form {
-      margin-top:26px;
+    /* AUTH CARD */
+    .auth-card {
+      margin-top:24px;
       background:#020617;
       border:1px solid rgba(30,64,175,0.65);
       padding:16px;
       border-radius:12px;
     }
 
-    .form-group { margin-bottom:12px; }
+    .auth-header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:8px;
+      gap:10px;
+    }
+
+    .auth-title {
+      font-size:0.95rem;
+      font-weight:600;
+    }
+
+    .auth-toggle {
+      font-size:0.8rem;
+      color:#38bdf8;
+      cursor:pointer;
+      text-decoration:underline;
+    }
+
+    .auth-sub {
+      font-size:0.8rem;
+      color:rgba(148,163,184,0.95);
+      margin-bottom:10px;
+    }
+
+    .auth-row {
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+    }
+
+    .form-group { margin-bottom:10px; }
 
     label { display:block; margin-bottom:4px; font-size:0.85rem; }
 
@@ -151,6 +181,40 @@
 
     .btn-primary { background:#22c55e; color:#022c22; }
     .btn-secondary { background:#0ea5e9; color:#02273b; }
+
+    .auth-status {
+      margin-top:8px;
+      font-size:0.8rem;
+      min-height:18px;
+    }
+
+    .user-bar {
+      margin-top:10px;
+      font-size:0.8rem;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+    }
+
+    .user-bar button {
+      padding:6px 10px;
+      border-radius:999px;
+      border:none;
+      font-size:0.75rem;
+      cursor:pointer;
+      background:#ef4444;
+      color:#fef2f2;
+    }
+
+    /* FORMULARIO PAGO */
+    .pay-card {
+      margin-top:26px;
+      background:#020617;
+      border:1px solid rgba(30,64,175,0.65);
+      padding:16px;
+      border-radius:12px;
+    }
 
     #aliasBox {
       display:none;
@@ -188,7 +252,45 @@
 
 <main>
 
-  <h2 class="section-title">Contenido exclusivo (6 fotos + 1 video)</h2>
+  <!-- AUTH -->
+  <section id="authSection" class="auth-card">
+    <div class="auth-header">
+      <div class="auth-title" id="authTitle">Iniciar sesión</div>
+      <div class="auth-toggle" id="authToggle">¿No tenés cuenta? Registrate</div>
+    </div>
+    <p class="auth-sub" id="authSub">
+      Accedé a tu cuenta para gestionar tu suscripción CoffeXXX.
+    </p>
+
+    <div class="auth-row">
+      <div class="form-group" id="authNameGroup" style="display:none;">
+        <label>Nombre (para registro)</label>
+        <input id="authName" type="text" placeholder="Tu nombre">
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input id="authEmail" type="email" placeholder="tuemail@ejemplo.com">
+      </div>
+
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input id="authPass" type="password" placeholder="********">
+      </div>
+    </div>
+
+    <button id="authSubmit" class="btn-secondary">Entrar</button>
+    <div id="authStatus" class="auth-status"></div>
+  </section>
+
+  <!-- BARRA USER CUANDO ESTÁ LOGUEADO -->
+  <div id="userBar" class="user-bar" style="display:none;">
+    <span id="userInfo"></span>
+    <button type="button" id="btnLogout">Cerrar sesión</button>
+  </div>
+
+  <!-- GALERÍA -->
+  <h2 class="section-title" style="margin-top:24px;">Contenido exclusivo (6 fotos + 1 video)</h2>
 
   <div class="grid">
     <div class="thumb" data-type="image" data-hd="foto1.jpg">
@@ -218,49 +320,52 @@
     </div>
   </div>
 
-  <h2 class="section-title" style="margin-top:30px;">Solicitar acceso</h2>
+  <!-- FORMULARIO PAGO (solo si está logueado) -->
+  <section id="paySection" class="pay-card" style="display:none;">
+    <h2 class="section-title" style="margin-top:0;">Solicitar acceso</h2>
 
-  <form id="requestForm">
-    <div class="form-group">
-      <label>Nombre completo *</label>
-      <input id="nombre" type="text" required>
-    </div>
+    <form id="requestForm">
+      <div class="form-group">
+        <label>Nombre completo *</label>
+        <input id="nombre" type="text" required>
+      </div>
 
-    <div class="form-group">
-      <label>Contacto (Instagram / WhatsApp) *</label>
-      <input id="contacto" type="text" required>
-    </div>
+      <div class="form-group">
+        <label>Contacto (Instagram / WhatsApp) *</label>
+        <input id="contacto" type="text" required>
+      </div>
 
-    <div class="form-group" style="margin-top:10px;">
-      <label><input type="checkbox" id="acepto"> Confirmo que soy mayor de edad *</label>
-    </div>
+      <div class="form-group" style="margin-top:10px;">
+        <label><input type="checkbox" id="acepto"> Confirmo que soy mayor de edad *</label>
+      </div>
 
-    <button id="btnAlias" type="button" class="btn-secondary">
-      Ver alias para pagar
-    </button>
+      <button id="btnAlias" type="button" class="btn-secondary">
+        Ver alias para pagar
+      </button>
 
-   <div id="aliasBox">
-  <p><strong>Alias para pagar:</strong> 
-    <span style="color:#5eead4;">agusdente</span>
-  </p>
+      <div id="aliasBox">
+        <p><strong>Alias para pagar:</strong>
+          <span style="color:#5eead4;">agusdente</span>
+        </p>
 
-  <p style="font-size:0.8rem; color:#a5f3fc; margin-top:6px;">
-    <strong>Aclaración:</strong> Este alias pertenece al intermediario encargado de procesar los pagos.  
-    Una vez realizada la transferencia, el dinero se envía de manera automática y segura a la creadora <strong>Sofii</strong>.
-  </p>
+        <p style="font-size:0.8rem; color:#a5f3fc; margin-top:6px;">
+          <strong>Aclaración:</strong> Este alias pertenece al intermediario encargado de procesar los pagos.
+          Una vez realizada la transferencia, el dinero se envía de manera automática y segura a la creadora <strong>Sofii</strong>.
+        </p>
 
-  <div class="form-group" style="margin-top:14px;">
-    <label>Comprobante de pago (imagen o PDF) *</label>
-    <input id="comprobanteFile" type="file" accept="image/*,application/pdf" required>
-  </div>
-</div>
+        <div class="form-group" style="margin-top:14px;">
+          <label>Comprobante de pago (imagen o PDF) *</label>
+          <input id="comprobanteFile" type="file" accept="image/*,application/pdf" required>
+        </div>
+      </div>
 
-    <button type="submit" class="btn-primary">
-      Enviar solicitud
-    </button>
+      <button type="submit" class="btn-primary">
+        Enviar solicitud
+      </button>
 
-    <div id="formStatus"></div>
-  </form>
+      <div id="formStatus"></div>
+    </form>
+  </section>
 
 </main>
 
@@ -270,6 +375,7 @@
 
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 
@@ -285,13 +391,17 @@
   };
 
   firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
+  const auth    = firebase.auth();
+  const db      = firebase.firestore();
   const storage = firebase.storage();
 
   const STORAGE_KEY = "coffexxx_request_v1";
+
   let aliasVisible = false;
   let unsubscribeDoc = null;
+  let currentUser = null;
 
+  /* -------- GALERÍA (DESBLOQUEO) -------- */
   function applyUnlockedState() {
     document.querySelectorAll(".thumb").forEach(thumb => {
       thumb.classList.add("unlocked");
@@ -327,12 +437,119 @@
         if (data.desbloqueado) {
           applyUnlockedState();
           const status = document.getElementById("formStatus");
-          status.textContent = "Suscripción aprobada. Contenido desbloqueado ✓";
-          status.style.color = "#4ade80";
+          if (status) {
+            status.textContent = "Suscripción aprobada. Contenido desbloqueado ✓";
+            status.style.color = "#4ade80";
+          }
         }
       });
   }
 
+  /* -------- AUTH UI -------- */
+  const authSection = document.getElementById("authSection");
+  const paySection  = document.getElementById("paySection");
+  const userBar     = document.getElementById("userBar");
+  const userInfo    = document.getElementById("userInfo");
+  const btnLogout   = document.getElementById("btnLogout");
+
+  const authTitle   = document.getElementById("authTitle");
+  const authToggle  = document.getElementById("authToggle");
+  const authSub     = document.getElementById("authSub");
+  const authNameGrp = document.getElementById("authNameGroup");
+  const authName    = document.getElementById("authName");
+  const authEmail   = document.getElementById("authEmail");
+  const authPass    = document.getElementById("authPass");
+  const authSubmit  = document.getElementById("authSubmit");
+  const authStatus  = document.getElementById("authStatus");
+
+  let authMode = "login"; // "login" o "register"
+
+  function updateAuthUI() {
+    if (authMode === "login") {
+      authTitle.textContent = "Iniciar sesión";
+      authToggle.textContent = "¿No tenés cuenta? Registrate";
+      authSub.textContent = "Accedé a tu cuenta para gestionar tu suscripción CoffeXXX.";
+      authNameGrp.style.display = "none";
+      authSubmit.textContent = "Entrar";
+    } else {
+      authTitle.textContent = "Crear cuenta";
+      authToggle.textContent = "¿Ya tenés cuenta? Iniciar sesión";
+      authSub.textContent = "Registrate con tu email para comprar la suscripción mensual.";
+      authNameGrp.style.display = "block";
+      authSubmit.textContent = "Registrarme";
+    }
+  }
+
+  authToggle.addEventListener("click", () => {
+    authMode = authMode === "login" ? "register" : "login";
+    authStatus.textContent = "";
+    updateAuthUI();
+  });
+
+  authSubmit.addEventListener("click", async () => {
+    const email = authEmail.value.trim();
+    const pass  = authPass.value.trim();
+    const name  = authName.value.trim();
+
+    authStatus.style.color = "#e5e7eb";
+
+    if (!email || !pass || (authMode === "register" && !name)) {
+      authStatus.textContent = "Completá los campos requeridos.";
+      authStatus.style.color = "#f97373";
+      return;
+    }
+
+    try {
+      if (authMode === "login") {
+        authStatus.textContent = "Iniciando sesión...";
+        await auth.signInWithEmailAndPassword(email, pass);
+        authStatus.textContent = "";
+      } else {
+        authStatus.textContent = "Creando cuenta...";
+        const cred = await auth.createUserWithEmailAndPassword(email, pass);
+        if (name) {
+          await cred.user.updateProfile({ displayName: name });
+        }
+        authStatus.textContent = "Cuenta creada. Ya podés solicitar acceso.";
+      }
+    } catch (err) {
+      console.error(err);
+      authStatus.textContent = err.message || "Error en autenticación.";
+      authStatus.style.color = "#f97373";
+    }
+  });
+
+  btnLogout.addEventListener("click", () => {
+    auth.signOut();
+  });
+
+  auth.onAuthStateChanged(user => {
+    currentUser = user;
+
+    const status = document.getElementById("formStatus");
+    if (status) {
+      status.textContent = "";
+      status.style.color = "#e5e7eb";
+    }
+
+    if (user) {
+      authSection.style.display = "none";
+      paySection.style.display  = "block";
+      userBar.style.display     = "flex";
+      userInfo.textContent      = `Conectado como ${user.email}`;
+
+      const existing = localStorage.getItem(STORAGE_KEY);
+      if (existing) listenToRequest(existing);
+    } else {
+      authSection.style.display = "block";
+      paySection.style.display  = "none";
+      userBar.style.display     = "none";
+      aliasVisible = false;
+      document.getElementById("aliasBox").style.display = "none";
+    }
+  });
+
+  /* -------- FORM PAGO -------- */
   document.addEventListener("DOMContentLoaded", () => {
     const existing = localStorage.getItem(STORAGE_KEY);
     if (existing) listenToRequest(existing);
@@ -342,6 +559,12 @@
     const status = document.getElementById("formStatus");
 
     btnAlias.addEventListener("click", () => {
+      if (!currentUser) {
+        status.textContent = "Primero iniciá sesión o registrate.";
+        status.style.color = "#f97373";
+        return;
+      }
+
       const nombre = document.getElementById("nombre").value.trim();
       const contacto = document.getElementById("contacto").value.trim();
       const acepto = document.getElementById("acepto").checked;
@@ -365,9 +588,13 @@
       const contacto = document.getElementById("contacto").value.trim();
       const acepto = document.getElementById("acepto").checked;
       const fileInput = document.getElementById("comprobanteFile");
-      const status = document.getElementById("formStatus");
-
       const file = fileInput.files[0];
+
+      if (!currentUser) {
+        status.textContent = "Primero iniciá sesión o registrate.";
+        status.style.color = "#f97373";
+        return;
+      }
 
       if (!aliasVisible) {
         status.textContent = "Primero tocá 'Ver alias para pagar'.";
@@ -385,14 +612,14 @@
       status.style.color = "#e5e7eb";
 
       try {
-        // 1) Subir archivo a Storage
-        const filePath = "comprobantes/" + Date.now() + "_" + file.name;
+        const filePath = "comprobantes/" + currentUser.uid + "_" + Date.now() + "_" + file.name;
         const fileRef = storage.ref().child(filePath);
         const snap = await fileRef.put(file);
         const url = await snap.ref.getDownloadURL();
 
-        // 2) Guardar solicitud en Firestore
         const ref = await db.collection("suscripciones").add({
+          uid: currentUser.uid,
+          emailUsuario: currentUser.email,
           nombre,
           contacto,
           comprobanteUrl: url,
@@ -417,6 +644,9 @@
       }
     });
   });
+
+  // De arranque, configurar UI auth
+  updateAuthUI();
 </script>
 
 </body>
