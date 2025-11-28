@@ -5,7 +5,7 @@
   <title>CoffeXXX - Panel admin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Favicon (mismo logo) -->
+  <!-- Favicon -->
   <link rel="icon" type="image/webp" href="logocoffexxx.webp">
 
   <style>
@@ -17,6 +17,105 @@
       color:#e5e7eb;
       min-height:100vh;
       display:flex;
+      flex-direction:column;
+    }
+
+    /* LOGIN SCREEN */
+    #loginScreen {
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+    }
+
+    .login-card {
+      width:100%;
+      max-width:360px;
+      background:#020617;
+      border-radius:16px;
+      border:1px solid rgba(30,64,175,0.7);
+      padding:18px 16px 16px;
+      box-shadow:0 18px 40px rgba(15,23,42,0.75);
+    }
+
+    .login-logo {
+      display:block;
+      margin:0 auto 8px;
+      width:80px;
+      height:auto;
+      mix-blend-mode:lighten;
+      -webkit-user-drag:none;
+      user-select:none;
+    }
+
+    .login-title {
+      text-align:center;
+      font-size:1.05rem;
+      font-weight:600;
+      margin-bottom:4px;
+    }
+
+    .login-subtitle {
+      text-align:center;
+      font-size:0.8rem;
+      color:rgba(148,163,184,0.95);
+      margin-bottom:12px;
+    }
+
+    .login-field {
+      margin-bottom:8px;
+      font-size:0.8rem;
+    }
+
+    .login-field label {
+      display:block;
+      margin-bottom:3px;
+      color:rgba(226,232,240,0.95);
+    }
+
+    .login-input {
+      width:100%;
+      padding:7px 9px;
+      border-radius:8px;
+      border:1px solid rgba(148,163,184,0.9);
+      background:#020617;
+      color:#e5e7eb;
+      font-size:0.85rem;
+      outline:none;
+    }
+
+    .login-btn {
+      margin-top:10px;
+      width:100%;
+      padding:8px 12px;
+      border-radius:999px;
+      border:none;
+      font-size:0.9rem;
+      font-weight:500;
+      cursor:pointer;
+      background:linear-gradient(135deg,#22c55e,#16a34a);
+      color:#020617;
+    }
+
+    .login-error {
+      margin-top:8px;
+      font-size:0.78rem;
+      color:#f97373;
+      min-height:16px;
+    }
+
+    .login-note {
+      margin-top:8px;
+      font-size:0.7rem;
+      color:rgba(148,163,184,0.9);
+      text-align:center;
+    }
+
+    /* ADMIN APP */
+    #adminApp {
+      display:none;
+      min-height:100vh;
       flex-direction:column;
     }
 
@@ -67,9 +166,7 @@
       flex-wrap:wrap;
     }
 
-    .status-left span.label {
-      font-weight:500;
-    }
+    .status-left span.label { font-weight:500; }
 
     .status-right {
       display:flex;
@@ -104,6 +201,11 @@
       color:#0b1120;
     }
 
+    .btn-logout {
+      background:#ef4444;
+      color:#fef2f2;
+    }
+
     .btn-small {
       padding:4px 8px;
       border-radius:999px;
@@ -119,8 +221,8 @@
     }
 
     .btn-lock {
-      background:#ef4444;
-      color:#fef2f2;
+      background:#f97316;
+      color:#1f2933;
     }
 
     .btn-copy-id {
@@ -230,80 +332,107 @@
 </head>
 <body>
 
-<header>
-  <img src="logocoffexxx.webp" class="logo" alt="CoffeXXX">
-  <div>
-    <h1>Panel admin CoffeXXX</h1>
-    <p>Gestioná las suscripciones y desbloqueá el contenido para cada cliente.</p>
-  </div>
-</header>
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-card">
+    <img src="logocoffexxx.webp" alt="CoffeXXX" class="login-logo">
+    <div class="login-title">Panel admin CoffeXXX</div>
+    <div class="login-subtitle">Ingresá con tu correo y contraseña de administrador.</div>
 
-<main>
-  <div class="status-bar">
-    <div class="status-left">
-      <span class="label">Estado:</span>
-      <span id="adminStatus">Inicializando...</span>
+    <form id="loginForm">
+      <div class="login-field">
+        <label for="loginEmail">Correo</label>
+        <input id="loginEmail" type="email" class="login-input" required
+               placeholder="agustindentella@gmail.com">
+      </div>
+
+      <div class="login-field">
+        <label for="loginPassword">Contraseña</label>
+        <input id="loginPassword" type="password" class="login-input" required
+               placeholder="********">
+      </div>
+
+      <button type="submit" class="login-btn">Entrar al panel</button>
+      <div id="loginError" class="login-error"></div>
+      <div class="login-note">
+        No uses esta contraseña como clave real de tu correo.<br>
+        Es solo para este panel.
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- APP ADMIN -->
+<div id="adminApp">
+  <header>
+    <img src="logocoffexxx.webp" class="logo" alt="CoffeXXX">
+    <div>
+      <h1>Panel admin CoffeXXX</h1>
+      <p>Gestioná las suscripciones y desbloqueá el contenido para cada cliente.</p>
     </div>
-    <div class="status-right">
-      <span class="badge-env">CoffeXXX · suscripciones</span>
-      <button type="button" class="btn btn-refresh" onclick="manualRefresh()">
-        🔄 Actualizar ahora
-      </button>
+  </header>
+
+  <main>
+    <div class="status-bar">
+      <div class="status-left">
+        <span class="label">Estado:</span>
+        <span id="adminStatus">Conectando con Firestore...</span>
+      </div>
+      <div class="status-right">
+        <span class="badge-env">CoffeXXX · suscripciones</span>
+        <button type="button" class="btn btn-refresh" onclick="manualRefresh()">🔄 Actualizar</button>
+        <button type="button" class="btn btn-logout" onclick="logout()">🚪 Cerrar sesión</button>
+      </div>
     </div>
-  </div>
 
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Fecha</th>
-          <th>Cliente</th>
-          <th>Contacto</th>
-          <th>Pago</th>
-          <th>Nota</th>
-          <th>Origen</th>
-          <th>Estado</th>
-          <th>Acciones</th>
-          <th>ID</th>
-        </tr>
-      </thead>
-      <tbody id="tableBody">
-        <!-- filas dinámicas -->
-      </tbody>
-    </table>
-  </div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Cliente</th>
+            <th>Contacto</th>
+            <th>Pago</th>
+            <th>Nota</th>
+            <th>Origen</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+            <th>ID</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- filas dinámicas -->
+        </tbody>
+      </table>
+    </div>
 
-  <div class="small-note">
-    Tip: al desbloquear, el cliente verá el contenido habilitado en el navegador donde hizo la solicitud.
-  </div>
-</main>
+    <div class="small-note">
+      Tip: al desbloquear, el cliente verá el contenido en el mismo navegador donde hizo la solicitud.
+    </div>
+  </main>
 
-<footer>
-  CoffeXXX · Panel interno · No compartas este enlace.
-</footer>
+  <footer>
+    CoffeXXX · Panel interno · No compartas este enlace públicamente.
+  </footer>
+</div>
 
 <!-- Firebase compat -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
 <script>
-  // 🔐 Clave simple de acceso al panel (CAMBIÁ ESTO)
-  const ADMIN_PASS = "CoffeXXXAdmin2025";
+  // ⚠️ CREDENCIALES LOCALES DEL PANEL (NO ES TU CORREO REAL)
+  const ADMIN_EMAIL = "agustindentella@gmail.com";
+  const ADMIN_PASS  = "919111sofixxx";
 
-  const pass = prompt("Clave de administrador CoffeXXX:");
-  if (pass !== ADMIN_PASS) {
-    document.body.innerHTML = "<div style='padding:20px;font-family:sans-serif;color:#fee2e2;background:#111827;min-height:100vh;'>Acceso denegado.</div>";
-    throw new Error("Acceso denegado");
-  }
-
-  // ⚙️ MISMA CONFIG QUE EN index.html (COMPLETAR)
   const firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "TU_PROYECTO.firebaseapp.com",
-    projectId: "TU_PROYECTO",
-    storageBucket: "TU_PROYECTO.appspot.com",
-    messagingSenderId: "XXX",
-    appId: "XXX"
+    apiKey: "AIzaSyDnQKrLuArSTWwg98T5sBCPQuP7yWg5zUc",
+    authDomain: "coffexxx-admin.firebaseapp.com",
+    projectId: "coffexxx-admin",
+    storageBucket: "coffexxx-admin.firebasestorage.app",
+    messagingSenderId: "669030910916",
+    appId: "1:669030910916:web:e170abf4663aec7bb1f291",
+    measurementId: "G-7XR9SB1BGZ"
   };
 
   firebase.initializeApp(firebaseConfig);
@@ -311,15 +440,17 @@
 
   const adminStatus = document.getElementById("adminStatus");
   const tableBody = document.getElementById("tableBody");
+  const loginScreen = document.getElementById("loginScreen");
+  const adminApp = document.getElementById("adminApp");
+  const loginForm = document.getElementById("loginForm");
+  const loginError = document.getElementById("loginError");
+
   let unsubscribe = null;
 
   function formatDate(ts) {
     if (!ts || !ts.toDate) return "-";
-    try {
-      return ts.toDate().toLocaleString("es-AR");
-    } catch {
-      return "-";
-    }
+    try { return ts.toDate().toLocaleString("es-AR"); }
+    catch { return "-"; }
   }
 
   function renderSnapshot(snapshot) {
@@ -357,9 +488,7 @@
           <span class="badge badge-amount">${monto.toLocaleString("es-AR")} ${moneda}</span>
         </td>
         <td>${nota ? nota : "-"}</td>
-        <td>
-          <span class="badge badge-origin">${origen}</span>
-        </td>
+        <td><span class="badge badge-origin">${origen}</span></td>
         <td>
           <span class="badge ${desbloqueado ? "badge-ok" : "badge-pend"}">
             ${desbloqueado ? "Desbloqueado" : "Pendiente"}
@@ -368,7 +497,7 @@
         <td>
           ${
             desbloqueado
-              ? `<button class="btn-small btn-lock" onclick="setUnlocked('${doc.id}', false)">Volver a bloquear</button>`
+              ? `<button class="btn-small btn-lock" onclick="setUnlocked('${doc.id}', false)">Bloquear</button>`
               : `<button class="btn-small btn-unlock" onclick="setUnlocked('${doc.id}', true)">Desbloquear</button>`
           }
         </td>
@@ -389,9 +518,7 @@
     unsubscribe = db.collection("suscripciones")
       .orderBy("creado", "desc")
       .onSnapshot(
-        snapshot => {
-          renderSnapshot(snapshot);
-        },
+        snapshot => { renderSnapshot(snapshot); },
         err => {
           console.error(err);
           adminStatus.textContent = "Error al escuchar los datos.";
@@ -435,13 +562,35 @@
     });
   }
 
-  // Exponer funciones al scope global
+  function logout() {
+    if (unsubscribe) unsubscribe();
+    adminApp.style.display = "none";
+    loginScreen.style.display = "flex";
+    loginForm.reset();
+    loginError.textContent = "";
+  }
+
+  // Exponer a scope global
   window.manualRefresh = manualRefresh;
   window.setUnlocked = setUnlocked;
   window.copyId = copyId;
+  window.logout = logout;
 
-  // Iniciar listener en cuanto carga
-  startListener();
+  // Manejo del login
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const emailInput = document.getElementById("loginEmail").value.trim();
+    const passInput = document.getElementById("loginPassword").value;
+
+    if (emailInput === ADMIN_EMAIL && passInput === ADMIN_PASS) {
+      loginError.textContent = "";
+      loginScreen.style.display = "none";
+      adminApp.style.display = "flex";
+      startListener();
+    } else {
+      loginError.textContent = "Correo o contraseña incorrectos.";
+    }
+  });
 </script>
 
 </body>
