@@ -61,10 +61,7 @@
       margin-bottom:12px;
     }
 
-    .login-field {
-      margin-bottom:8px;
-      font-size:0.8rem;
-    }
+    .login-field { margin-bottom:8px; font-size:0.8rem; }
 
     .login-field label {
       display:block;
@@ -134,16 +131,8 @@
       user-select:none;
     }
 
-    header h1 {
-      font-size:1.1rem;
-      margin:0;
-    }
-
-    header p {
-      margin:2px 0 0;
-      font-size:0.78rem;
-      color:rgba(148,163,184,0.95);
-    }
+    header h1 { font-size:1.1rem; margin:0; }
+    header p  { margin:2px 0 0; font-size:0.78rem; color:rgba(148,163,184,0.95); }
 
     main {
       flex:1;
@@ -186,7 +175,7 @@
     }
 
     .btn-refresh { background:#0ea5e9; color:#0b1120; }
-    .btn-logout { background:#ef4444; color:#fef2f2; }
+    .btn-logout  { background:#ef4444; color:#fef2f2; }
 
     .btn-small {
       padding:4px 8px;
@@ -197,10 +186,10 @@
       margin:2px 0;
     }
 
-    .btn-unlock { background:#22c55e; color:#022c22; }
-    .btn-lock { background:#f97316; color:#1f2933; }
-    .btn-copy-id { background:#111827; color:#e5e7eb;border:1px solid rgba(55,65,81,0.9); }
-    .btn-view-doc { background:#0ea5e9; color:#02273b; }
+    .btn-unlock    { background:#22c55e; color:#022c22; }
+    .btn-lock      { background:#f97316; color:#1f2933; }
+    .btn-copy-id   { background:#111827; color:#e5e7eb; border:1px solid rgba(55,65,81,0.9); }
+    .btn-view-doc  { background:#0ea5e9; color:#02273b; }
 
     .table-wrapper {
       overflow:auto;
@@ -208,6 +197,7 @@
       border-radius:10px;
       border:1px solid rgba(30,64,175,0.7);
       background:#020617;
+      margin-bottom:18px;
     }
 
     table {
@@ -236,7 +226,7 @@
     }
 
     tr:nth-child(even) td { background:rgba(15,23,42,0.98); }
-    tr:nth-child(odd) td { background:rgba(15,23,42,0.92); }
+    tr:nth-child(odd)  td { background:rgba(15,23,42,0.92); }
 
     .mono {
       font-family:monospace;
@@ -254,15 +244,22 @@
       gap:4px;
     }
 
-    .badge-pend { background:#fbbf24; color:#451a03; }
-    .badge-ok { background:#22c55e; color:#022c22; }
+    .badge-pend   { background:#fbbf24; color:#451a03; }
+    .badge-ok     { background:#22c55e; color:#022c22; }
     .badge-origin { background:#1d4ed8; color:#e0ecff; }
     .badge-amount { background:#0d9488; color:#ccfbf1; }
 
     .small-note {
-      margin-top:10px;
+      margin-top:6px;
       font-size:0.7rem;
       color:rgba(148,163,184,0.9);
+    }
+
+    .section-title {
+      margin:16px 0 6px;
+      font-size:0.95rem;
+      font-weight:600;
+      color:#e5e7eb;
     }
 
     footer {
@@ -343,12 +340,14 @@
       </div>
     </div>
 
+    <!-- SUSCRIPCIONES -->
+    <h2 class="section-title">Solicitudes de suscripción</h2>
     <div class="table-wrapper">
       <table>
         <thead>
           <tr>
             <th>Fecha</th>
-            <th>Cliente</th>
+            <th>Cliente / Usuario</th>
             <th>Contacto</th>
             <th>Comprobante</th>
             <th>Origen / Monto</th>
@@ -365,6 +364,22 @@
       Al desbloquear, el cliente verá el contenido en el navegador donde hizo la solicitud.
     </div>
 
+    <!-- USUARIOS REGISTRADOS -->
+    <h2 class="section-title">Usuarios registrados</h2>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha registro</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>UID</th>
+          </tr>
+        </thead>
+        <tbody id="usersBody"></tbody>
+      </table>
+    </div>
+
   </main>
 
   <footer>CoffeXXX · Panel interno</footer>
@@ -375,11 +390,10 @@
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
 <script>
-  /* LOGIN CONFIG (solo panel, no es tu Gmail real) */
-  const ADMIN_EMAIL = "agustindentella68@gmail.com";
+  /* LOGIN PANEL (no es tu Gmail real) */
+  const ADMIN_EMAIL = "agustindentella@gmail.com";
   const ADMIN_PASS  = "919111sofixxx";
 
-  /* FIREBASE */
   const firebaseConfig = {
     apiKey: "AIzaSyDnQKrLuArSTWwg98T5sBCPQuP7yWg5zUc",
     authDomain: "coffexxx-admin.firebaseapp.com",
@@ -399,8 +413,10 @@
   const loginError  = document.getElementById("loginError");
   const adminStatus = document.getElementById("adminStatus");
   const tableBody   = document.getElementById("tableBody");
+  const usersBody   = document.getElementById("usersBody");
 
-  let unsubscribe = null;
+  let unsubscribeSubs  = null;
+  let unsubscribeUsers = null;
 
   /* LOGIN */
   loginForm.addEventListener("submit", e => {
@@ -412,28 +428,30 @@
       loginError.textContent = "";
       loginScreen.style.display = "none";
       adminApp.style.display = "flex";
-      startListener();
+      startListeners();
     } else {
       loginError.textContent = "Correo o contraseña incorrectos.";
     }
   });
 
   function logout() {
-    if (unsubscribe) unsubscribe();
+    if (unsubscribeSubs)  unsubscribeSubs();
+    if (unsubscribeUsers) unsubscribeUsers();
     adminApp.style.display = "none";
     loginScreen.style.display = "flex";
     loginForm.reset();
     loginError.textContent = "";
   }
 
-  /* FIRESTORE */
+  /* FORMATO FECHA */
   function formatDate(ts) {
     if (!ts || !ts.toDate) return "-";
     try { return ts.toDate().toLocaleString("es-AR"); }
     catch { return "-"; }
   }
 
-  function renderSnapshot(snapshot) {
+  /* RENDER SUSCRIPCIONES */
+  function renderSubsSnapshot(snapshot) {
     tableBody.innerHTML = "";
     if (snapshot.empty) {
       tableBody.innerHTML = "<tr><td colspan='8'>No hay solicitudes.</td></tr>";
@@ -454,12 +472,17 @@
       const comprobanteNombre = d.comprobanteNombre || "(sin nombre)";
       const comprobanteUrl = d.comprobanteUrl || null;
 
+      const emailUsuario = d.emailUsuario || "";
+
       const tr = document.createElement("tr");
 
       tr.innerHTML = `
         <td>${fecha}</td>
-        <td>${nombre}</td>
-        <td>${contacto}</td>
+        <td>
+          ${nombre || "-"}
+          ${emailUsuario ? `<br><span class="mono">${emailUsuario}</span>` : ""}
+        </td>
+        <td>${contacto || "-"}</td>
         <td>
           ${comprobanteUrl
             ? `<button class="btn-small btn-view-doc" onclick="openComprobante('${encodeURI(comprobanteUrl)}')">
@@ -491,26 +514,60 @@
     });
   }
 
-  function startListener() {
-    if (unsubscribe) unsubscribe();
-    adminStatus.textContent = "Escuchando suscripciones...";
-    unsubscribe = db.collection("suscripciones")
+  /* RENDER USUARIOS */
+  function renderUsersSnapshot(snapshot) {
+    usersBody.innerHTML = "";
+    if (snapshot.empty) {
+      usersBody.innerHTML = "<tr><td colspan='4'>No hay usuarios registrados.</td></tr>";
+      return;
+    }
+
+    snapshot.forEach(doc => {
+      const d = doc.data();
+      const tr = document.createElement("tr");
+
+      tr.innerHTML = `
+        <td>${formatDate(d.creado)}</td>
+        <td>${d.nombre || "-"}</td>
+        <td>${d.email || "-"}</td>
+        <td class="mono">${d.uid || doc.id}</td>
+      `;
+
+      usersBody.appendChild(tr);
+    });
+  }
+
+  function startListeners() {
+    if (unsubscribeSubs)  unsubscribeSubs();
+    if (unsubscribeUsers) unsubscribeUsers();
+
+    adminStatus.textContent = "Escuchando suscripciones y usuarios...";
+
+    unsubscribeSubs = db.collection("suscripciones")
       .orderBy("creado","desc")
       .onSnapshot(
-        snap => renderSnapshot(snap),
-        err => {
-          console.error(err);
-          adminStatus.textContent = "Error al escuchar datos.";
-        }
+        snap => renderSubsSnapshot(snap),
+        err  => { console.error(err); adminStatus.textContent = "Error al escuchar suscripciones."; }
+      );
+
+    unsubscribeUsers = db.collection("usuarios")
+      .orderBy("creado","desc")
+      .onSnapshot(
+        snap => renderUsersSnapshot(snap),
+        err  => { console.error(err); adminStatus.textContent = "Error al escuchar usuarios."; }
       );
   }
 
   async function manualRefresh() {
     try {
       adminStatus.textContent = "Actualizando...";
-      const snap = await db.collection("suscripciones").orderBy("creado","desc").get();
-      renderSnapshot(snap);
-      adminStatus.textContent = "Listado actualizado.";
+      const [snapSubs, snapUsers] = await Promise.all([
+        db.collection("suscripciones").orderBy("creado","desc").get(),
+        db.collection("usuarios").orderBy("creado","desc").get()
+      ]);
+      renderSubsSnapshot(snapSubs);
+      renderUsersSnapshot(snapUsers);
+      adminStatus.textContent = "Listados actualizados.";
     } catch (err) {
       console.error(err);
       adminStatus.textContent = "Error al actualizar.";
@@ -544,7 +601,7 @@
     }
   }
 
-  // Exponer funciones a window para usarlas en los onclick
+  // Exponer funciones para onclick
   window.manualRefresh   = manualRefresh;
   window.setUnlocked     = setUnlocked;
   window.copyId          = copyId;
