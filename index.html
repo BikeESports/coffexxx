@@ -533,31 +533,55 @@
     auth.signOut();
   });
 
-  auth.onAuthStateChanged(user => {
-    currentUser = user;
+auth.onAuthStateChanged(user => {
+  currentUser = user;
 
-    const status = document.getElementById("formStatus");
-    if (status) {
-      status.textContent = "";
-      status.style.color = "#e5e7eb";
-    }
+  const status = document.getElementById("formStatus");
+  if (status) {
+    status.textContent = "";
+    status.style.color = "#e5e7eb";
+  }
 
-    if (user) {
-      authSection.style.display = "none";
-      paySection.style.display  = "block";
-      userBar.style.display     = "flex";
-      userInfo.textContent      = `Conectado como ${user.email}`;
+  if (user) {
+    authSection.style.display = "none";
+    paySection.style.display  = "block";
+    userBar.style.display     = "flex";
+    userInfo.textContent      = `Conectado como ${user.email}`;
 
-      const existing = localStorage.getItem(STORAGE_KEY);
-      if (existing) listenToRequest(existing);
+    const existing = localStorage.getItem(STORAGE_KEY);
+    if (existing) listenToRequest(existing);
+
+    // 👇👇 SOLO ESTE USUARIO TIENE ACCESO SIEMPRE SIN CENSURA
+    const VIP_UID   = "YxxSlMfKDCgJP1LDmXoh5ISIsCw1";
+    const VIP_EMAIL = "leandroaizcorbe@gmail.com";
+
+    if (user.uid === VIP_UID || user.email === VIP_EMAIL) {
+      // Leandro -> desbloqueo total
+      applyUnlockedState();
     } else {
-      authSection.style.display = "block";
-      paySection.style.display  = "none";
-      userBar.style.display     = "none";
-      aliasVisible = false;
-      document.getElementById("aliasBox").style.display = "none";
+      // (Opcional) para futuro: si algún otro tiene suscripción aprobada
+      db.collection("suscripciones")
+        .where("uid", "==", user.uid)
+        .where("desbloqueado", "==", true)
+        .limit(1)
+        .get()
+        .then(snap => {
+          if (!snap.empty) {
+            applyUnlockedState();
+          }
+        })
+        .catch(err => console.error("Error verificando suscripción:", err));
     }
-  });
+
+  } else {
+    authSection.style.display = "block";
+    paySection.style.display  = "none";
+    userBar.style.display     = "none";
+    aliasVisible = false;
+    document.getElementById("aliasBox").style.display = "none";
+  }
+});
+
 
   /* -------- FORM PAGO -------- */
   document.addEventListener("DOMContentLoaded", () => {
