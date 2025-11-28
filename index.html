@@ -486,49 +486,52 @@
     updateAuthUI();
   });
 
-  authSubmit.addEventListener("click", async () => {
-    const email = authEmail.value.trim();
-    const pass  = authPass.value.trim();
-    const name  = authName.value.trim();
+authSubmit.addEventListener("click", async () => {
+  const email = authEmail.value.trim();
+  const pass  = authPass.value.trim();
+  const name  = authName.value.trim();
 
-    authStatus.style.color = "#e5e7eb";
+  authStatus.style.color = "#e5e7eb";
 
-    if (!email || !pass || (authMode === "register" && !name)) {
-      authStatus.textContent = "Completá los campos requeridos.";
-      authStatus.style.color = "#f97373";
-      return;
-    }
+  if (!email || !pass || (authMode === "register" && !name)) {
+    authStatus.textContent = "Completá los campos requeridos.";
+    authStatus.style.color = "#f97373";
+    return;
+  }
 
-    try {
-      if (authMode === "login") {
-        authStatus.textContent = "Iniciando sesión...";
-        await auth.signInWithEmailAndPassword(email, pass);
-        authStatus.textContent = "";
-      } else {
-        authStatus.textContent = "Creando cuenta...";
-        const cred = await auth.createUserWithEmailAndPassword(email, pass);
+  try {
+    if (authMode === "login") {
+      authStatus.textContent = "Iniciando sesión...";
+      await auth.signInWithEmailAndPassword(email, pass);
+      authStatus.textContent = "";
+    } else {
+      authStatus.textContent = "Creando cuenta...";
 
-        if (name) {
-          await cred.user.updateProfile({ displayName: name });
-        }
+      // crea el usuario en Auth
+      const cred = await auth.createUserWithEmailAndPassword(email, pass);
 
-        // Guardar usuario en colección "usuarios"
-        await db.collection("usuarios").doc(cred.user.uid).set({
-          uid: cred.user.uid,
-          nombre: name || null,
-          email: email,
-          creado: firebase.firestore.FieldValue.serverTimestamp()
-        });
-
-        authStatus.textContent = "Cuenta creada. Ya podés solicitar acceso.";
+      // nombre visible
+      if (name) {
+        await cred.user.updateProfile({ displayName: name });
       }
-    } catch (err) {
-  console.error(err);
-  authStatus.textContent = "Firebase: " + (err.message || "Error en autenticación.");
-  authStatus.style.color = "#f97373";
-}
 
-  });
+      // 💾 GUARDA EL USUARIO EN FIRESTORE
+      await db.collection("usuarios").doc(cred.user.uid).set({
+        uid: cred.user.uid,
+        nombre: name || null,
+        email: email,
+        creado: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      authStatus.textContent = "Cuenta creada. Ya podés solicitar acceso.";
+    }
+  } catch (err) {
+    console.error(err);
+    authStatus.textContent = "Firebase: " + (err.message || "Error en autenticación.");
+    authStatus.style.color = "#f97373";
+  }
+});
+
 
   btnLogout.addEventListener("click", () => {
     auth.signOut();
