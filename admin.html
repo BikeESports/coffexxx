@@ -4,8 +4,6 @@
   <meta charset="UTF-8" />
   <title>CoffeXXX - Panel admin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <!-- Favicon -->
   <link rel="icon" type="image/webp" href="logocoffexxx.webp">
 
   <style>
@@ -166,27 +164,18 @@
       flex-wrap:wrap;
     }
 
-    .status-left span.label { font-weight:500; }
-
-    .status-right {
-      display:flex;
-      gap:8px;
-      align-items:center;
-      flex-wrap:wrap;
-    }
-
     .badge-env {
       padding:2px 7px;
       border-radius:999px;
       border:1px solid rgba(148,163,184,0.7);
       font-size:0.7rem;
-      text-transform:uppercase;
-      letter-spacing:0.08em;
       color:rgba(148,163,184,0.95);
+      letter-spacing:0.08em;
+      text-transform:uppercase;
     }
 
     .btn {
-      padding:5px 10px;
+      padding:6px 12px;
       border-radius:999px;
       border:none;
       font-size:0.75rem;
@@ -196,40 +185,21 @@
       gap:4px;
     }
 
-    .btn-refresh {
-      background:#0ea5e9;
-      color:#0b1120;
-    }
-
-    .btn-logout {
-      background:#ef4444;
-      color:#fef2f2;
-    }
+    .btn-refresh { background:#0ea5e9; color:#0b1120; }
+    .btn-logout { background:#ef4444; color:#fef2f2; }
 
     .btn-small {
       padding:4px 8px;
       border-radius:999px;
       border:none;
-      font-size:0.75rem;
+      font-size:0.74rem;
       cursor:pointer;
       margin:2px 0;
     }
 
-    .btn-unlock {
-      background:#22c55e;
-      color:#022c22;
-    }
-
-    .btn-lock {
-      background:#f97316;
-      color:#1f2933;
-    }
-
-    .btn-copy-id {
-      background:#111827;
-      color:#e5e7eb;
-      border:1px solid rgba(55,65,81,0.9);
-    }
+    .btn-unlock { background:#22c55e; color:#022c22; }
+    .btn-lock { background:#f97316; color:#1f2933; }
+    .btn-copy-id { background:#111827; color:#e5e7eb;border:1px solid rgba(55,65,81,0.9); }
 
     .table-wrapper {
       overflow:auto;
@@ -248,11 +218,11 @@
     thead {
       position:sticky;
       top:0;
-      z-index:2;
       background:#020617;
+      z-index:2;
     }
 
-    th, td {
+    th,td {
       padding:6px 6px;
       border-bottom:1px solid rgba(30,64,175,0.45);
       vertical-align:top;
@@ -262,19 +232,13 @@
       text-align:left;
       font-weight:600;
       color:rgba(191,219,254,0.95);
-      background:#020617;
     }
 
-    tr:nth-child(even) td {
-      background:rgba(15,23,42,0.98);
-    }
-
-    tr:nth-child(odd) td {
-      background:rgba(15,23,42,0.92);
-    }
+    tr:nth-child(even) td { background:rgba(15,23,42,0.98); }
+    tr:nth-child(odd) td { background:rgba(15,23,42,0.92); }
 
     .mono {
-      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-family:monospace;
       font-size:0.7rem;
       word-break:break-all;
     }
@@ -287,35 +251,15 @@
       font-size:0.7rem;
       border:1px solid rgba(148,163,184,0.8);
       gap:4px;
-      white-space:nowrap;
     }
 
-    .badge-pend {
-      background:#fbbf24;
-      color:#451a03;
-      border-color:rgba(254,243,199,0.9);
-    }
-
-    .badge-ok {
-      background:#22c55e;
-      color:#022c22;
-      border-color:rgba(187,247,208,0.9);
-    }
-
-    .badge-origin {
-      background:rgba(30,64,175,0.8);
-      color:#e0ecff;
-      border-color:rgba(129,140,248,0.9);
-    }
-
-    .badge-amount {
-      background:rgba(15,118,110,0.85);
-      color:#ccfbf1;
-      border-color:rgba(45,212,191,0.9);
-    }
+    .badge-pend { background:#fbbf24; color:#451a03; }
+    .badge-ok { background:#22c55e; color:#022c22; }
+    .badge-origin { background:#1d4ed8; color:#e0ecff; }
+    .badge-amount { background:#0d9488; color:#ccfbf1; }
 
     .small-note {
-      margin-top:6px;
+      margin-top:10px;
       font-size:0.7rem;
       color:rgba(148,163,184,0.9);
     }
@@ -335,53 +279,68 @@
 <!-- LOGIN -->
 <div id="loginScreen">
   <div class="login-card">
-    <img src="logocoffexxx.webp" alt="CoffeXXX" class="login-logo">
+    <img src="logocoffexxx.webp" class="login-logo">
+
     <div class="login-title">Panel admin CoffeXXX</div>
     <div class="login-subtitle">Ingresá con tu correo y contraseña de administrador.</div>
 
-    <form id="loginForm">
+    <form id="loginForm" autocomplete="off">
+
       <div class="login-field">
         <label for="loginEmail">Correo</label>
-        <input id="loginEmail" type="email" class="login-input" required
-               placeholder="agustindentella@gmail.com">
+        <input id="loginEmail"
+               class="login-input"
+               type="email"
+               autocomplete="off"
+               autocorrect="off"
+               autocapitalize="none"
+               spellcheck="false"
+               placeholder=""
+               required>
       </div>
 
       <div class="login-field">
         <label for="loginPassword">Contraseña</label>
-        <input id="loginPassword" type="password" class="login-input" required
-               placeholder="********">
+        <input id="loginPassword"
+               class="login-input"
+               type="password"
+               autocomplete="new-password"
+               placeholder=""
+               required>
       </div>
 
       <button type="submit" class="login-btn">Entrar al panel</button>
       <div id="loginError" class="login-error"></div>
+
       <div class="login-note">
-        No uses esta contraseña como clave real de tu correo.<br>
+        No uses esta contraseña como clave real de tu correo.  
         Es solo para este panel.
       </div>
+
     </form>
   </div>
 </div>
 
-<!-- APP ADMIN -->
+<!-- APP -->
 <div id="adminApp">
   <header>
-    <img src="logocoffexxx.webp" class="logo" alt="CoffeXXX">
+    <img src="logocoffexxx.webp" class="logo">
     <div>
       <h1>Panel admin CoffeXXX</h1>
-      <p>Gestioná las suscripciones y desbloqueá el contenido para cada cliente.</p>
+      <p>Gestioná las suscripciones y desbloqueá el contenido.</p>
     </div>
   </header>
 
   <main>
+
     <div class="status-bar">
-      <div class="status-left">
-        <span class="label">Estado:</span>
-        <span id="adminStatus">Conectando con Firestore...</span>
+      <div>
+        <strong>Estado:</strong> <span id="adminStatus">Conectando...</span>
       </div>
       <div class="status-right">
-        <span class="badge-env">CoffeXXX · suscripciones</span>
-        <button type="button" class="btn btn-refresh" onclick="manualRefresh()">🔄 Actualizar</button>
-        <button type="button" class="btn btn-logout" onclick="logout()">🚪 Cerrar sesión</button>
+        <span class="badge-env">CoffeXXX</span>
+        <button class="btn btn-refresh" onclick="manualRefresh()">🔄 Actualizar</button>
+        <button class="btn btn-logout" onclick="logout()">🚪 Cerrar sesión</button>
       </div>
     </div>
 
@@ -400,31 +359,29 @@
             <th>ID</th>
           </tr>
         </thead>
-        <tbody id="tableBody">
-          <!-- filas dinámicas -->
-        </tbody>
+        <tbody id="tableBody"></tbody>
       </table>
     </div>
 
     <div class="small-note">
-      Tip: al desbloquear, el cliente verá el contenido en el mismo navegador donde hizo la solicitud.
+      El contenido se desbloquea en el navegador del cliente automáticamente.
     </div>
+
   </main>
 
-  <footer>
-    CoffeXXX · Panel interno · No compartas este enlace públicamente.
-  </footer>
+  <footer>CoffeXXX · Panel interno</footer>
 </div>
 
-<!-- Firebase compat -->
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
 <script>
-  // ⚠️ CREDENCIALES LOCALES DEL PANEL (NO ES TU CORREO REAL)
+  /* ADMIN LOGIN */
   const ADMIN_EMAIL = "agustindentella@gmail.com";
   const ADMIN_PASS  = "919111sofixxx";
 
+  /* FIREBASE */
   const firebaseConfig = {
     apiKey: "AIzaSyDnQKrLuArSTWwg98T5sBCPQuP7yWg5zUc",
     authDomain: "coffexxx-admin.firebaseapp.com",
@@ -438,149 +395,20 @@
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
 
-  const adminStatus = document.getElementById("adminStatus");
-  const tableBody = document.getElementById("tableBody");
   const loginScreen = document.getElementById("loginScreen");
-  const adminApp = document.getElementById("adminApp");
-  const loginForm = document.getElementById("loginForm");
-  const loginError = document.getElementById("loginError");
+  const adminApp    = document.getElementById("adminApp");
+  const loginForm   = document.getElementById("loginForm");
+  const loginError  = document.getElementById("loginError");
+  const adminStatus = document.getElementById("adminStatus");
+  const tableBody   = document.getElementById("tableBody");
 
   let unsubscribe = null;
 
-  function formatDate(ts) {
-    if (!ts || !ts.toDate) return "-";
-    try { return ts.toDate().toLocaleString("es-AR"); }
-    catch { return "-"; }
-  }
-
-  function renderSnapshot(snapshot) {
-    tableBody.innerHTML = "";
-    if (snapshot.empty) {
-      tableBody.innerHTML = "<tr><td colspan='9'>No hay solicitudes por el momento.</td></tr>";
-      return;
-    }
-
-    snapshot.forEach(doc => {
-      const data = doc.data();
-      const tr = document.createElement("tr");
-
-      const fecha = formatDate(data.creado);
-      const nombre = data.nombre || "";
-      const contacto = data.contacto || "";
-      const email = data.email || "";
-      const comprobante = data.comprobante || "";
-      const nota = data.nota || "";
-      const origen = data.origen || "CoffeXXX";
-      const monto = data.monto || 0;
-      const moneda = data.moneda || "ARS";
-      const desbloqueado = !!data.desbloqueado;
-
-      tr.innerHTML = `
-        <td>${fecha}</td>
-        <td>${nombre}</td>
-        <td>
-          ${contacto ? contacto : ""}
-          ${email ? `<br><span class="mono">${email}</span>` : ""}
-        </td>
-        <td>
-          <span class="mono">${comprobante || "-"}</span>
-          <br>
-          <span class="badge badge-amount">${monto.toLocaleString("es-AR")} ${moneda}</span>
-        </td>
-        <td>${nota ? nota : "-"}</td>
-        <td><span class="badge badge-origin">${origen}</span></td>
-        <td>
-          <span class="badge ${desbloqueado ? "badge-ok" : "badge-pend"}">
-            ${desbloqueado ? "Desbloqueado" : "Pendiente"}
-          </span>
-        </td>
-        <td>
-          ${
-            desbloqueado
-              ? `<button class="btn-small btn-lock" onclick="setUnlocked('${doc.id}', false)">Bloquear</button>`
-              : `<button class="btn-small btn-unlock" onclick="setUnlocked('${doc.id}', true)">Desbloquear</button>`
-          }
-        </td>
-        <td class="mono">
-          ${doc.id}
-          <br>
-          <button class="btn-small btn-copy-id" onclick="copyId('${doc.id}')">copiar</button>
-        </td>
-      `;
-
-      tableBody.appendChild(tr);
-    });
-  }
-
-  function startListener() {
-    if (unsubscribe) unsubscribe();
-    adminStatus.textContent = "Escuchando suscripciones en tiempo real...";
-    unsubscribe = db.collection("suscripciones")
-      .orderBy("creado", "desc")
-      .onSnapshot(
-        snapshot => { renderSnapshot(snapshot); },
-        err => {
-          console.error(err);
-          adminStatus.textContent = "Error al escuchar los datos.";
-        }
-      );
-  }
-
-  async function manualRefresh() {
-    try {
-      adminStatus.textContent = "Actualizando...";
-      const snapshot = await db.collection("suscripciones")
-        .orderBy("creado", "desc")
-        .get();
-      renderSnapshot(snapshot);
-      adminStatus.textContent = "Listado actualizado.";
-    } catch (err) {
-      console.error(err);
-      adminStatus.textContent = "Error al actualizar.";
-    }
-  }
-
-  async function setUnlocked(id, value) {
-    try {
-      await db.collection("suscripciones").doc(id).update({
-        desbloqueado: value
-      });
-      adminStatus.textContent = value
-        ? "Suscripción desbloqueada: el cliente ya puede ver el contenido."
-        : "Suscripción bloqueada nuevamente.";
-    } catch (err) {
-      console.error(err);
-      adminStatus.textContent = "Error al cambiar el estado.";
-    }
-  }
-
-  function copyId(id) {
-    navigator.clipboard.writeText(id).then(() => {
-      adminStatus.textContent = "ID copiado al portapapeles.";
-    }).catch(() => {
-      adminStatus.textContent = "No se pudo copiar el ID.";
-    });
-  }
-
-  function logout() {
-    if (unsubscribe) unsubscribe();
-    adminApp.style.display = "none";
-    loginScreen.style.display = "flex";
-    loginForm.reset();
-    loginError.textContent = "";
-  }
-
-  // Exponer a scope global
-  window.manualRefresh = manualRefresh;
-  window.setUnlocked = setUnlocked;
-  window.copyId = copyId;
-  window.logout = logout;
-
-  // Manejo del login
-  loginForm.addEventListener("submit", (e) => {
+  /* LOGIN */
+  loginForm.addEventListener("submit", e => {
     e.preventDefault();
     const emailInput = document.getElementById("loginEmail").value.trim();
-    const passInput = document.getElementById("loginPassword").value;
+    const passInput  = document.getElementById("loginPassword").value;
 
     if (emailInput === ADMIN_EMAIL && passInput === ADMIN_PASS) {
       loginError.textContent = "";
@@ -591,6 +419,91 @@
       loginError.textContent = "Correo o contraseña incorrectos.";
     }
   });
+
+  function logout() {
+    if (unsubscribe) unsubscribe();
+    adminApp.style.display = "none";
+    loginScreen.style.display = "flex";
+    loginForm.reset();
+    loginError.textContent = "";
+  }
+
+  /* FIRESTORE */
+  function formatDate(ts) {
+    if (!ts || !ts.toDate) return "-";
+    try { return ts.toDate().toLocaleString("es-AR"); }
+    catch { return "-"; }
+  }
+
+  function renderSnapshot(snapshot) {
+    tableBody.innerHTML = "";
+    if (snapshot.empty) {
+      tableBody.innerHTML = "<tr><td colspan='9'>No hay solicitudes.</td></tr>";
+      return;
+    }
+
+    snapshot.forEach(doc => {
+      const d = doc.data();
+
+      const fila = document.createElement("tr");
+
+      fila.innerHTML = `
+        <td>${formatDate(d.creado)}</td>
+        <td>${d.nombre || ""}</td>
+        <td>${d.contacto || ""}${d.email ? `<br><span class='mono'>${d.email}</span>` : ""}</td>
+        <td>
+          <span class="mono">${d.comprobante || "-"}</span>
+          <br>
+          <span class="badge badge-amount">${(d.monto||0).toLocaleString("es-AR")} ${d.moneda||"ARS"}</span>
+        </td>
+        <td>${d.nota || "-"}</td>
+        <td><span class="badge badge-origin">${d.origen || "CoffeXXX"}</span></td>
+        <td>
+          <span class="badge ${d.desbloqueado ? 'badge-ok' : 'badge-pend'}">
+            ${d.desbloqueado ? 'Desbloqueado' : 'Pendiente'}
+          </span>
+        </td>
+        <td>
+          ${d.desbloqueado
+            ? `<button class="btn-small btn-lock" onclick="setUnlocked('${doc.id}', false)">Bloquear</button>`
+            : `<button class="btn-small btn-unlock" onclick="setUnlocked('${doc.id}', true)">Desbloquear</button>`
+          }
+        </td>
+        <td class="mono">
+          ${doc.id}
+          <br>
+          <button class="btn-small btn-copy-id" onclick="copyId('${doc.id}')">copiar</button>
+        </td>
+      `;
+
+      tableBody.appendChild(fila);
+    });
+  }
+
+  function startListener() {
+    if (unsubscribe) unsubscribe();
+    adminStatus.textContent = "Escuchando suscripciones...";
+    unsubscribe = db.collection("suscripciones")
+      .orderBy("creado","desc")
+      .onSnapshot(snap => renderSnapshot(snap));
+  }
+
+  async function manualRefresh() {
+    adminStatus.textContent = "Actualizando...";
+    const snap = await db.collection("suscripciones").orderBy("creado","desc").get();
+    renderSnapshot(snap);
+    adminStatus.textContent = "Listado actualizado.";
+  }
+
+  async function setUnlocked(id, val) {
+    await db.collection("suscripciones").doc(id).update({ desbloqueado: val });
+    adminStatus.textContent = val ? "Desbloqueado ✓" : "Bloqueado";
+  }
+
+  function copyId(id) {
+    navigator.clipboard.writeText(id);
+    adminStatus.textContent = "ID copiado.";
+  }
 </script>
 
 </body>
