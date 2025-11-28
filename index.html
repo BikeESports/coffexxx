@@ -5,7 +5,6 @@
   <title>CoffeXXX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Favicon -->
   <link rel="icon" type="image/webp" href="logocoffexxx.webp">
 
   <style>
@@ -13,8 +12,8 @@
 
     body {
       font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background:#050608;
-      color:#f5f5f5;
+      background:#020617;
+      color:#e5e7eb;
       min-height:100vh;
       display:flex;
       flex-direction:column;
@@ -22,246 +21,61 @@
 
     header {
       padding:16px 20px;
-      border-bottom:1px solid rgba(255,255,255,0.08);
-      background:#020617;
-      position:sticky;
-      top:0;
-      z-index:5;
       text-align:center;
+      border-bottom:1px solid rgba(30,64,175,0.5);
+    }
+
+    header img.logo {
+      width:130px;
+      height:auto;
+      margin:0 auto 10px;
+      mix-blend-mode:lighten;
+      display:block;
+      -webkit-user-drag:none;
+      user-select:none;
     }
 
     header h1 {
-      font-size:1.4rem;
+      font-size:1.3rem;
       font-weight:600;
+      margin-bottom:4px;
     }
 
     header p {
-      font-size:0.8rem;
+      font-size:0.85rem;
       color:rgba(148,163,184,0.95);
-      margin-top:4px;
     }
 
     main {
-      max-width:980px;
       width:100%;
+      max-width:900px;
       margin:0 auto;
-      padding:20px 16px 32px;
-      display:flex;
-      flex-direction:column;
-      gap:22px;
-    }
-
-    /* LOGO TRANSPARENTE VISUAL (fondo negro desaparece) */
-    img.logo {
-      width:150px;
-      height:auto;
-      mix-blend-mode: lighten;
-      display:block;
-      margin:0 auto 20px;
-      user-select:none;
-      -webkit-user-drag:none;
+      padding:20px 12px 50px;
     }
 
     .section-title {
-      font-size:1rem;
-      margin-bottom:6px;
+      font-size:1.1rem;
+      margin-bottom:10px;
       font-weight:600;
+      color:#e2e8f0;
     }
 
-    .section-text {
-      font-size:0.85rem;
-      color:rgba(209,213,219,0.95);
-      line-height:1.4;
-    }
-
-    .price-box {
-      margin-top:8px;
-      padding:10px 12px;
-      border-radius:12px;
-      background:rgba(15,23,42,0.95);
-      border:1px solid rgba(148,163,184,0.7);
-      display:flex;
-      flex-wrap:wrap;
+    /* GRID DE CONTENIDO */
+    .grid {
+      margin-top:10px;
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(170px,1fr));
       gap:12px;
-      align-items:flex-start;
-      justify-content:space-between;
-    }
-
-    .price-main {
-      font-size:1.2rem;
-      font-weight:600;
-    }
-
-    .price-main span {
-      font-size:0.8rem;
-      font-weight:400;
-      color:rgba(209,213,219,0.9);
-      margin-left:6px;
-    }
-
-    .price-note {
-      font-size:0.78rem;
-      color:rgba(148,163,184,0.95);
-      margin-top:4px;
-    }
-
-    .catalog-summary {
-      margin-top:10px;
-      padding:10px 12px;
-      border-radius:12px;
-      background:rgba(15,23,42,0.96);
-      border:1px solid rgba(148,163,184,0.7);
-      font-size:0.82rem;
-      color:rgba(209,213,219,0.95);
-      max-width:320px;
-    }
-
-    .catalog-summary ul {
-      padding-left:18px;
-      margin-top:6px;
-    }
-
-    .catalog-summary li {
-      margin-bottom:3px;
-    }
-
-    .alias-box {
-      margin-top:6px;
-      padding:8px 10px;
-      border-radius:10px;
-      background:rgba(15,23,42,0.98);
-      border:1px dashed rgba(148,163,184,0.9);
-      font-size:0.85rem;
-      display:none;
-    }
-
-    .alias-label {
-      font-size:0.76rem;
-      text-transform:uppercase;
-      letter-spacing:0.08em;
-      color:rgba(148,163,184,0.95);
-    }
-
-    .alias-value {
-      margin-top:4px;
-      font-weight:600;
-      font-size:0.95rem;
-    }
-
-    .alias-help {
-      margin-top:4px;
-      font-size:0.75rem;
-      color:rgba(148,163,184,0.95);
-    }
-
-    .alias-warn {
-      margin-top:4px;
-      font-size:0.75rem;
-      color:rgba(251,191,36,0.95);
-    }
-
-    .form-card {
-      margin-top:6px;
-      padding:14px 12px;
-      border-radius:14px;
-      background:rgba(15,23,42,0.97);
-      border:1px solid rgba(148,163,184,0.7);
-    }
-
-    .form-grid {
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:10px;
-    }
-
-    @media (max-width:700px) {
-      .form-grid {
-        grid-template-columns:1fr;
-      }
-    }
-
-    .form-field {
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-      font-size:0.8rem;
-    }
-
-    .form-input, .form-textarea {
-      padding:7px 9px;
-      border-radius:8px;
-      border:1px solid rgba(148,163,184,0.9);
-      background:#020617;
-      color:#e5e7eb;
-      font-size:0.85rem;
-      outline:none;
-    }
-
-    .form-footer {
-      margin-top:10px;
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      font-size:0.78rem;
-      color:rgba(148,163,184,0.95);
-    }
-
-    .btn-row {
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:6px;
-    }
-
-    .btn-primary, .btn-secondary {
-      padding:8px 16px;
-      border-radius:999px;
-      border:none;
-      font-size:0.85rem;
-      font-weight:500;
-      cursor:pointer;
-    }
-
-    .btn-primary {
-      background:linear-gradient(135deg,#22c55e,#16a34a);
-      color:#020617;
-    }
-
-    .btn-secondary {
-      background:rgba(15,23,42,0.96);
-      color:#e5e7eb;
-      border:1px solid rgba(148,163,184,0.9);
-    }
-
-    .gallery-section-title {
-      margin-top:4px;
-      font-size:0.9rem;
-      font-weight:600;
-    }
-
-    .gallery {
-      margin-top:8px;
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:10px;
-    }
-
-    @media (max-width:800px) {
-      .gallery { grid-template-columns:repeat(2,minmax(0,1fr)); }
-    }
-
-    @media (max-width:540px) {
-      .gallery { grid-template-columns:repeat(2,minmax(0,1fr)); }
     }
 
     .thumb {
       position:relative;
+      width:100%;
+      height:240px;
       border-radius:12px;
       overflow:hidden;
-      background:#020617;
-      border:1px solid rgba(148,163,184,0.5);
-      aspect-ratio:3/4;
-      user-select:none;
+      background:#0f172a;
+      cursor:pointer;
     }
 
     .thumb-inner {
@@ -269,356 +83,243 @@
       height:100%;
       background-size:cover;
       background-position:center;
-      filter:blur(18px);
-      transform:scale(1.1);
-      transition:0.4s ease;
+      filter:blur(22px) brightness(0.35);
+      transition:0.25s ease;
     }
 
     .thumb.unlocked .thumb-inner {
       filter:none;
-      transform:scale(1.02);
     }
 
-    .thumb-overlay {
+    .thumb::after {
+      content:"Contenido desbloqueado ✓";
       position:absolute;
-      inset:0;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      padding:8px;
-      background:linear-gradient(to bottom,rgba(15,23,42,0.9),rgba(15,23,42,0.05),rgba(15,23,42,0.9));
-      pointer-events:none;
+      bottom:6px;
+      left:50%;
+      transform:translateX(-50%);
+      background:rgba(34,197,94,0.85);
+      color:#022c22;
+      padding:2px 10px;
+      border-radius:999px;
       font-size:0.7rem;
+      opacity:0;
+      pointer-events:none;
+      transition:0.25s;
     }
 
-    .thumb-label {
-      padding:3px 7px;
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,0.7);
-      background:rgba(15,23,42,0.96);
-      text-transform:uppercase;
-      letter-spacing:0.08em;
+    .thumb.unlocked::after { opacity:1; }
+
+    /* VIDEO */
+    .thumb video {
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:12px;
     }
 
-    .thumb-lock {
-      margin-top:4px;
-      padding:3px 7px;
-      border-radius:999px;
-      border:1px solid rgba(248,250,252,0.7);
-      background:rgba(15,23,42,0.96);
-      display:inline-flex;
-      align-items:center;
-      gap:4px;
+    /* FORMULARIO */
+    form {
+      margin-top:26px;
+      background:#020617;
+      border:1px solid rgba(30,64,175,0.65);
+      padding:16px;
+      border-radius:12px;
     }
 
-    .thumb-footer {
-      padding:3px 7px;
+    .form-group { margin-bottom:12px; }
+
+    label { display:block; margin-bottom:4px; font-size:0.85rem; }
+
+    input, textarea {
+      width:100%;
+      padding:8px 10px;
+      border-radius:8px;
+      border:1px solid rgba(148,163,184,0.85);
+      background:#050b18;
+      color:#e5e7eb;
+      font-size:0.88rem;
+      outline:none;
+    }
+
+    textarea { height:70px; resize:none; }
+
+    .btn-primary, .btn-secondary {
+      padding:10px 14px;
       border-radius:999px;
-      border:1px solid rgba(148,163,184,0.7);
-      background:rgba(15,23,42,0.96);
+      border:none;
+      cursor:pointer;
+      width:100%;
+      margin-top:10px;
+      font-size:0.9rem;
+      font-weight:500;
+    }
+
+    .btn-primary { background:#22c55e; color:#022c22; }
+    .btn-secondary { background:#0ea5e9; color:#02273b; }
+
+    #aliasBox {
+      display:none;
+      border:1px solid rgba(94,234,212,0.5);
+      padding:10px;
+      border-radius:10px;
+      background:#042f2e;
+      margin-top:12px;
+    }
+
+    #formStatus {
+      margin-top:10px;
+      font-size:0.85rem;
+      min-height:20px;
     }
 
     footer {
       margin-top:auto;
-      padding:12px;
+      padding:14px;
       text-align:center;
-      font-size:0.7rem;
-      color:rgba(148,163,184,0.95);
-      border-top:1px solid rgba(15,23,42,0.9);
+      font-size:0.8rem;
+      color:rgba(148,163,184,0.9);
+      border-top:1px solid rgba(30,64,175,0.5);
     }
   </style>
 </head>
 <body>
 
 <header>
+  <img src="logocoffexxx.webp" class="logo" id="coffexLogo">
   <h1>CoffeXXX</h1>
-  <p>Suscripción mensual para acceder al contenido privado de Sofi.</p>
+  <p>Contenido exclusivo · Suscripción mensual $80.000 ARS</p>
 </header>
 
 <main>
 
-  <!-- LOGO -->
-  <img src="logocoffexxx.webp" class="logo" alt="CoffeXXX">
-
-  <!-- INFO SUSCRIPCIÓN -->
-  <section>
-    <div class="section-title">Suscripción mensual CoffeXXX</div>
-    <p class="section-text">
-      Pagando tu suscripción accedés al contenido exclusivo de Sofi dentro de CoffeXXX.
-      El acceso se habilita manualmente una vez que se confirma tu pago.
-    </p>
-
-    <div class="price-box">
-      <div>
-        <div class="price-main">
-          $ 80.000 <span>ARS / suscripción mensual</span>
-        </div>
-        <div class="price-note">
-          La suscripción es válida por 30 días desde la aprobación.
-        </div>
-      </div>
-
-      <div class="catalog-summary">
-        <strong>¿Qué incluye CoffeXXX?</strong>
-        <ul>
-          <li>Acceso al contenido exclusivo mientras dure tu suscripción.</li>
-          <li>Actualizaciones dentro del espacio CoffeXXX.</li>
-          <li>Gestión mediante intermediario de pago.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- FORMULARIO + ALIAS -->
-  <section>
-    <div class="section-title">Paso 1: completá tus datos</div>
-
-    <div class="form-card">
-      <form id="requestForm">
-        <div class="form-grid">
-          <div class="form-field">
-            <label>Nombre y apellido *</label>
-            <input id="nombre" class="form-input" required>
-          </div>
-          <div class="form-field">
-            <label>Contacto (Instagram / WhatsApp) *</label>
-            <input id="contacto" class="form-input" required>
-          </div>
-          <div class="form-field">
-            <label>Email (opcional)</label>
-            <input id="email" class="form-input" type="email">
-          </div>
-          <div class="form-field">
-            <label>Mensaje (opcional)</label>
-            <textarea id="nota" class="form-textarea"></textarea>
-          </div>
-        </div>
-
-        <label style="display:flex; gap:8px; margin-top:10px;">
-          <input type="checkbox" id="acepto" required>
-          <span>Confirmo que soy mayor de edad y no compartiré el contenido.</span>
-        </label>
-
-        <div class="btn-row">
-          <button type="button" class="btn-secondary" onclick="showAlias()">Ver alias para pagar</button>
-        </div>
-
-        <div id="aliasBox" class="alias-box">
-          <div class="alias-label">Datos de pago</div>
-          <div class="alias-value">Alias: <strong>agusdente</strong></div>
-          <div class="alias-help">
-            Este alias pertenece a un intermediario. El dinero se envía automáticamente a Sofi.
-          </div>
-
-          <div class="form-field" style="margin-top:10px;">
-            <label>Comprobante *</label>
-            <input id="comprobante" class="form-input" required>
-          </div>
-
-          <div class="btn-row">
-            <button type="submit" class="btn-primary">Enviar solicitud</button>
-          </div>
-        </div>
-
-        <div id="formStatus" style="margin-top:8px;"></div>
-
-      </form>
-    </div>
-  </section>
+  <h2 class="section-title">Contenido exclusivo (6 fotos + 1 video)</h2>
 
   <!-- GALERÍA -->
-  <section>
-    
-    <div class="gallery" id="gallery">
+  <div class="grid">
 
-      <div class="thumb" data-type="image" data-id="1" data-hd="foto1.jpg">
-        <div class="thumb-inner" style="background-image:url('foto1.jpg');"></div>
-        <div class="thumb-overlay">
-          <div>
-            <div class="thumb-label">Contenido</div>
-            <div class="thumb-lock"><span>🔒</span><span class="lock-text">Bloqueado</span></div>
-          </div>
-          <div class="thumb-footer">Contenido 1</div>
-        </div>
-      </div>
-
-      <div class="thumb" data-type="image" data-id="2" data-hd="foto2.jpg">
-        <div class="thumb-inner" style="background-image:url('foto2.jpg');"></div>
-        <div class="thumb-overlay">
-          <div><div class="thumb-label">Contenido</div><div class="thumb-lock"><span>🔒</span><span class="lock-text">Bloqueado</span></div></div>
-          <div class="thumb-footer">Contenido 2</div>
-        </div>
-      </div>
-
-      <div class="thumb" data-type="image" data-id="3" data-hd="foto3.jpg">
-        <div class="thumb-inner" style="background-image:url('foto3.jpg');"></div>
-        <div class="thumb-overlay">
-          <div><div class="thumb-label">Contenido</div><div class="thumb-lock"><span>🔒</span><span class="lock-text">Bloqueado</span></div></div>
-          <div class="thumb-footer">Contenido 3</div>
-        </div>
-      </div>
-
-      <div class="thumb" data-type="image" data-id="4" data-hd="foto4.jpg">
-        <div class="thumb-inner" style="background-image:url('foto4.jpg');"></div>
-        <div class="thumb-overlay">
-          <div><div class="thumb-label">Contenido</div><div class="thumb-lock"><span>🔒</span><span class="lock-text">Bloqueado</span></div></div>
-          <div class="thumb-footer">Contenido 4</div>
-        </div>
-      </div>
-
-      <div class="thumb" data-type="image" data-id="5" data-hd="foto5.jpg">
-        <div class="thumb-inner" style="background-image:url('foto5.jpg');"></div>
-        <div class="thumb-overlay">
-          <div><div class="thumb-label">Contenido</div><div class="thumb-lock"><span>🔒</span><span class="lock-text">Bloqueado</span></div></div>
-          <div class="thumb-footer">Contenido 5</div>
-        </div>
-      </div>
-
-      <div class="thumb" data-type="image" data-id="6" data-hd="foto6.jpg">
-        <div class="thumb-inner" style="background-image:url('foto6.jpg');"></div>
-        <div class="thumb-overlay">
-          <div><div class="thumb-label">Contenido</div><div class="thumb-lock"><span>🔒</span><span class="lock-text">Bloqueado</span></div></div>
-          <div class="thumb-footer">Contenido 6</div>
-        </div>
-      </div>
-
-      <!-- VIDEO -->
-      <div class="thumb" data-type="video" data-id="v1"
-           data-video="video1.mp4"
-           data-poster="foto6.jpg">
-        <div class="thumb-inner" style="background-image:url('foto6.jpg');"></div>
-        <div class="thumb-overlay">
-          <div><div class="thumb-label">Contenido</div><div class="thumb-lock"><span>🔒</span><span class="lock-text">Bloqueado</span></div></div>
-          <div class="thumb-footer">Contenido 7</div>
-        </div>
-      </div>
-
+    <!-- FOTO 1 -->
+    <div class="thumb" data-type="image" data-hd="foto1.jpg">
+      <div class="thumb-inner" style="background-image:url('foto1.jpg')"></div>
     </div>
 
-    <p style="font-size:0.75rem; color:rgba(148,163,184,0.95); margin-top:8px;">
-      Bloqueamos click derecho y descargas directas, pero ninguna página puede evitar capturas de pantalla.
-    </p>
+    <div class="thumb" data-type="image" data-hd="foto2.jpg">
+      <div class="thumb-inner" style="background-image:url('foto2.jpg')"></div>
+    </div>
 
-  </section>
+    <div class="thumb" data-type="image" data-hd="foto3.jpg">
+      <div class="thumb-inner" style="background-image:url('foto3.jpg')"></div>
+    </div>
+
+    <div class="thumb" data-type="image" data-hd="foto4.jpg">
+      <div class="thumb-inner" style="background-image:url('foto4.jpg')"></div>
+    </div>
+
+    <div class="thumb" data-type="image" data-hd="foto5.jpg">
+      <div class="thumb-inner" style="background-image:url('foto5.jpg')"></div>
+    </div>
+
+    <div class="thumb" data-type="image" data-hd="foto6.jpg">
+      <div class="thumb-inner" style="background-image:url('foto6.jpg')"></div>
+    </div>
+
+    <!-- VIDEO -->
+    <div class="thumb"
+         data-type="video"
+         data-video="video1.mp4"
+         data-poster="foto1.jpg">
+      <div class="thumb-inner" style="background-image:url('foto1.jpg')"></div>
+    </div>
+
+  </div>
+
+  <!-- FORMULARIO -->
+  <h2 class="section-title" style="margin-top:30px;">Solicitar acceso</h2>
+
+  <form id="requestForm">
+
+    <div class="form-group">
+      <label>Nombre completo *</label>
+      <input id="nombre" type="text" required>
+    </div>
+
+    <div class="form-group">
+      <label>Contacto (Instagram, WhatsApp, etc.) *</label>
+      <input id="contacto" type="text" required>
+    </div>
+
+    <div class="form-group">
+      <label>Email (opcional)</label>
+      <input id="email" type="email">
+    </div>
+
+    <div class="form-group">
+      <label>Nota para el admin (opcional)</label>
+      <textarea id="nota"></textarea>
+    </div>
+
+    <div class="form-group" style="margin-top:10px;">
+      <label><input type="checkbox" id="acepto"> Confirmo que soy mayor de edad *</label>
+    </div>
+
+    <!-- BOTÓN VER ALIAS -->
+    <button type="button" class="btn-secondary" onclick="showAlias()">
+      Ver alias para pagar
+    </button>
+
+    <!-- ALIAS (OCULTO HASTA DAR CLICK) -->
+    <div id="aliasBox">
+      <p><strong>Alias para pagar:</strong> <span style="color:#5eead4;">agusdente</span></p>
+      <p style="font-size:0.8rem; color:#a5f3fc;">
+        Este alias pertenece al intermediario.  
+        El dinero se envía automáticamente a la creadora Sofi.
+      </p>
+
+      <div class="form-group" style="margin-top:10px;">
+        <label>Comprobante de pago *</label>
+        <input id="comprobante" type="text" placeholder="Ej: CAP-1234" required>
+      </div>
+    </div>
+
+    <!-- BOTÓN ENVIAR -->
+    <button type="submit" class="btn-primary">Enviar solicitud</button>
+
+    <div id="formStatus"></div>
+
+  </form>
 
 </main>
 
-<footer>CoffeXXX · © 2025 · Contenido privado de Sofi.</footer>
+<footer>
+  CoffeXXX © Contenido exclusivo · Suscripción mensual
+</footer>
 
-<!-- Firebase (SIN CONFIG TODAVÍA) -->
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
 <script>
   const firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "TU_PROYECTO.firebaseapp.com",
-    projectId: "TU_PROYECTO",
-    storageBucket: "TU_PROYECTO.appspot.com",
-    messagingSenderId: "XXX",
-    appId: "XXX"
+    apiKey: "AIzaSyDnQKrLuArSTWwg98T5sBCPQuP7yWg5zUc",
+    authDomain: "coffexxx-admin.firebaseapp.com",
+    projectId: "coffexxx-admin",
+    storageBucket: "coffexxx-admin.firebasestorage.app",
+    messagingSenderId: "669030910916",
+    appId: "1:669030910916:web:e170abf4663aec7bb1f291",
+    measurementId: "G-7XR9SB1BGZ"
   };
 
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
 
-  const STORAGE_KEY = "coffexxx_request_id_v1";
+  const STORAGE_KEY = "coffexxx_request_v1";
+
   let aliasVisible = false;
   let unsubscribeDoc = null;
 
-  document.addEventListener("contextmenu", e => e.preventDefault());
-  document.addEventListener("dragstart", e => e.preventDefault());
-
   function applyUnlockedState() {
     document.querySelectorAll(".thumb").forEach(thumb => {
-      const type = thumb.dataset.type;
       thumb.classList.add("unlocked");
+      const type = thumb.dataset.type;
 
       if (type === "image") {
-        const hd = thumb.dataset.hd;
-        thumb.querySelector(".thumb-inner").style.backgroundImage = `url('${hd}')`;
-      }
-
-      if (type === "video") {
-        const src = thumb.dataset.video;
-        const poster = thumb.dataset.poster;
-        thumb.innerHTML = `
-          <video controls playsinline controlsList="nodownload" 
-                 style="width:100%;height:100%;object-fit:cover;border-radius:12px;"
-                 poster="${poster}">
-            <source src="${src}" type="video/mp4">
-          </video>
-        `;
-      }
-    });
-  }
-
-  function listenToRequest(id) {
-    if (unsubscribeDoc) unsubscribeDoc();
-    unsubscribeDoc = db.collection("suscripciones").doc(id).onSnapshot(doc => {
-      if (doc.exists && doc.data().desbloqueado === true) {
-        applyUnlockedState();
-        const status = document.getElementById("formStatus");
-        status.textContent = "Suscripción aprobada. Contenido desbloqueado ✓";
-        status.style.color = "#4ade80";
-      }
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const id = localStorage.getItem(STORAGE_KEY);
-    if (id) listenToRequest(id);
-  });
-
-  function showAlias() {
-    const nombre = nombre.value.trim();
-    const contacto = contacto.value.trim();
-    const acepto = document.getElementById("acepto").checked;
-    const status = document.getElementById("formStatus");
-
-    if (!nombre || !contacto || !acepto) {
-      status.textContent = "Completá datos y aceptá condiciones primero.";
-      status.style.color = "#f97373";
-      return;
-    }
-
-    aliasBox.style.display = "block";
-    aliasVisible = true;
-    status.textContent = "Alias visible. Realizá el pago.";
-    status.style.color = "#4ade80";
-  }
-
-  requestForm.onsubmit = async(e) => {
-    e.preventDefault();
-    const status = document.getElementById("formStatus");
-
-    if (!aliasVisible) {
-      status.textContent = "Primero presioná 'Ver alias para pagar'.";
-      status.style.color = "#f97373";
-      return;
-    }
-
-    const data = {
-      nombre: nombre.value.trim(),
-      contacto: contacto.value.trim(),
-      email: email.value.trim() || null,
-      nota: nota.value.trim() || null,
-      comprobante: comprobante.value.trim(),
-      creado: firebase.firestore.FieldValue.serverTimestamp(),
-      origen: "CoffeXXX",
-      monto: 80000,
-      moneda: "ARS",
-      desbloqueado: false
-    };
-
-    const docRef = await db.collection("suscripciones").add(data);
-    localStorage.setItem(STORAGE_KEY, docRef.id);
-    listenToRequest(docRef.id);
-
-    status.textContent = "Solicitud enviada. Se desbloqueará cuando Sofi la apruebe ✓";
-    status.style.color = "#4ade80";
-  };
-</script>
-
-</body>
-</html>
+        const hd = thum
