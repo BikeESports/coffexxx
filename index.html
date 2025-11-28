@@ -322,4 +322,120 @@
       const type = thumb.dataset.type;
 
       if (type === "image") {
-        const hd = thum
+        const hd = thumb.dataset.hd;
+        const inner = thumb.querySelector(".thumb-inner");
+        if (inner && hd) inner.style.backgroundImage = `url('${hd}')`;
+      }
+
+      if (type === "video") {
+        const src = thumb.dataset.video;
+        const poster = thumb.dataset.poster;
+        thumb.innerHTML = `
+          <video controls playsinline controlsList="nodownload"
+                 poster="${poster || ''}">
+            <source src="${src}" type="video/mp4">
+          </video>
+        `;
+      }
+    });
+  }
+
+  function listenToRequest(id) {
+    if (!id) return;
+    if (unsubscribeDoc) unsubscribeDoc();
+
+    unsubscribeDoc = db.collection("suscripciones").doc(id)
+      .onSnapshot(doc => {
+        if (!doc.exists) return;
+        const data = doc.data();
+        if (data.desbloqueado) {
+          applyUnlockedState();
+          const status = document.getElementById("formStatus");
+          status.textContent = "Suscripción aprobada. Contenido desbloqueado ✓";
+          status.style.color = "#4ade80";
+        }
+      });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const existing = localStorage.getItem(STORAGE_KEY);
+    if (existing) listenToRequest(existing);
+  });
+
+  function showAlias() {
+    const nombre = document.getElementById("nombre").value.trim();
+    const contacto = document.getElementById("contacto").value.trim();
+    const acepto = document.getElementById("acepto").checked;
+
+    const status = document.getElementById("formStatus");
+
+    if (!nombre || !contacto || !acepto) {
+      status.textContent = "Completá Nombre, Contacto y tildá la casilla de mayor de edad.";
+      status.style.color = "#f97373";
+      return;
+    }
+
+    document.getElementById("aliasBox").style.display = "block";
+    aliasVisible = true;
+
+    status.textContent = "Alias mostrado. Realizá el pago y enviá el comprobante.";
+    status.style.color = "#5eead4";
+  }
+
+  document.getElementById("requestForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const nombre = document.getElementById("nombre").value.trim();
+    const contacto = document.getElementById("contacto").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const nota = document.getElementById("nota").value.trim();
+    const comprobante = document.getElementById("comprobante").value.trim();
+    const acepto = document.getElementById("acepto").checked;
+
+    const status = document.getElementById("formStatus");
+
+    if (!aliasVisible) {
+      status.textContent = "Primero tocá 'Ver alias para pagar'.";
+      status.style.color = "#f97373";
+      return;
+    }
+
+    if (!nombre || !contacto || !comprobante || !acepto) {
+      status.textContent = "Completá los datos obligatorios y el comprobante.";
+      status.style.color = "#f97373";
+      return;
+    }
+
+    status.textContent = "Enviando solicitud...";
+    status.style.color = "#e5e7eb";
+
+    try {
+      const ref = await db.collection("suscripciones").add({
+        nombre,
+        contacto,
+        email: email || null,
+        nota: nota || null,
+        comprobante,
+        creado: firebase.firestore.FieldValue.serverTimestamp(),
+        origen: "CoffeXXX",
+        monto: 80000,
+        moneda: "ARS",
+        desbloqueado: false
+      });
+
+      localStorage.setItem(STORAGE_KEY, ref.id);
+      listenToRequest(ref.id);
+
+      status.textContent = "Solicitud enviada. Se desbloquea cuando el admin la apruebe.";
+      status.style.color = "#4ade80";
+
+    } catch(err) {
+      console.error(err);
+      status.textContent = "Error al enviar la solicitud.";
+      status.style.color = "#f97373";
+    }
+  });
+</script>
+
+</body>
+</html>
