@@ -523,10 +523,11 @@
         authStatus.textContent = "Cuenta creada. Ya podés solicitar acceso.";
       }
     } catch (err) {
-      console.error(err);
-      authStatus.textContent = "Firebase: " + (err.message || "Error en autenticación.";
-      authStatus.style.color = "#f97373";
-    }
+  console.error(err);
+  authStatus.textContent = "Firebase: " + (err.message || "Error en autenticación.");
+  authStatus.style.color = "#f97373";
+}
+
   });
 
   btnLogout.addEventListener("click", () => {
