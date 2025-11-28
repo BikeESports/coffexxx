@@ -507,12 +507,24 @@
       } else {
         authStatus.textContent = "Creando cuenta...";
         const cred = await auth.createUserWithEmailAndPassword(email, pass);
+
+        // nombre visible en el perfil de Firebase Auth
         if (name) {
           await cred.user.updateProfile({ displayName: name });
         }
+
+        // 💾 guardar usuario en Firestore (colección "usuarios")
+        await db.collection("usuarios").doc(cred.user.uid).set({
+          uid: cred.user.uid,
+          nombre: name || null,
+          email: email,
+          creado: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
         authStatus.textContent = "Cuenta creada. Ya podés solicitar acceso.";
       }
     } catch (err) {
+
       console.error(err);
       authStatus.textContent = err.message || "Error en autenticación.";
       authStatus.style.color = "#f97373";
