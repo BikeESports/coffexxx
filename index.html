@@ -621,37 +621,62 @@
       status.textContent = "Subiendo comprobante y enviando solicitud...";
       status.style.color = "#e5e7eb";
 
-      try {
-        const filePath = "comprobantes/" + currentUser.uid + "_" + Date.now() + "_" + file.name;
-        const fileRef = storage.ref().child(filePath);
-        const snap = await fileRef.put(file);
-        const url = await snap.ref.getDownloadURL();
+try {
+  const filePath = "comprobantes/" + currentUser.uid + "_" + Date.now() + "_" + file.name;
+  const fileRef = storage.ref().child(filePath);
 
-        const ref = await db.collection("suscripciones").add({
-          uid: currentUser.uid,
-          emailUsuario: currentUser.email,
-          nombre,
-          contacto,
-          comprobanteUrl: url,
-          comprobanteNombre: file.name,
-          comprobantePath: filePath,
-          creado: firebase.firestore.FieldValue.serverTimestamp(),
-          origen: "CoffeXXX",
-          monto: 80000,
-          moneda: "ARS",
-          desbloqueado: false
-        });
+  const MAX_MB = 5;
+  if (file.size > MAX_MB * 1024 * 1024) {
+    status.textContent = `El comprobante es muy pesado (máx ${MAX_MB} MB).`;
+    status.style.color = "#f97373";
+    return;
+  }
 
-        localStorage.setItem(STORAGE_KEY, ref.id);
-        listenToRequest(ref.id);
+  const uploadTask = fileRef.put(file);
 
-        status.textContent = "Solicitud enviada. Se desbloqueará cuando el admin la apruebe.";
-        status.style.color = "#4ade80";
-      } catch (err) {
-        console.error(err);
-        status.textContent = "Error al enviar la solicitud. Intentá de nuevo.";
-        status.style.color = "#f97373";
-      }
+  uploadTask.on("state_changed",
+    (snapshot) => {
+      const percent = Math.round(
+        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      );
+      status.textContent = `Subiendo comprobante... ${percent}%`;
+      status.style.color = "#e5e7eb";
+    },
+    (error) => {
+      console.error(error);
+      status.textContent = "Error al subir el comprobante. Intentá de nuevo.";
+      status.style.color = "#f97373";
+    },
+    async () => {
+      const url = await uploadTask.snapshot.ref.getDownloadURL();
+
+      const ref = await db.collection("suscripciones").add({
+        uid: currentUser.uid,
+        emailUsuario: currentUser.email,
+        nombre,
+        contacto,
+        comprobanteUrl: url,
+        comprobanteNombre: file.name,
+        comprobantePath: filePath,
+        creado: firebase.firestore.FieldValue.serverTimestamp(),
+        origen: "CoffeXXX",
+        monto: 80000,
+        moneda: "ARS",
+        desbloqueado: false
+      });
+
+      localStorage.setItem(STORAGE_KEY, ref.id);
+      listenToRequest(ref.id);
+
+      status.textContent = "Solicitud enviada. Se desbloqueará cuando el admin la apruebe.";
+      status.style.color = "#4ade80";
+    }
+  );
+} catch (err) {
+  console.error(err);
+  status.textContent = "Error al enviar la solicitud. Intentá de nuevo.";
+  status.style.color = "#f97373";
+}
     });
   });
 
