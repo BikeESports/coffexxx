@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>CoffeXXX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <link rel="icon" type="image/webp" href="logocoffexxx.webp">
 
   <style>
@@ -60,11 +59,11 @@
       color:#e2e8f0;
     }
 
-    /* GRID DE CONTENIDO */
+    /* GALERÍA */
     .grid {
       margin-top:10px;
       display:grid;
-      grid-template-columns:repeat(auto-fill, minmax(170px,1fr));
+      grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
       gap:12px;
     }
 
@@ -75,7 +74,6 @@
       border-radius:12px;
       overflow:hidden;
       background:#0f172a;
-      cursor:pointer;
     }
 
     .thumb-inner {
@@ -109,7 +107,6 @@
 
     .thumb.unlocked::after { opacity:1; }
 
-    /* VIDEO */
     .thumb video {
       width:100%;
       height:100%;
@@ -130,7 +127,7 @@
 
     label { display:block; margin-bottom:4px; font-size:0.85rem; }
 
-    input, textarea {
+    input {
       width:100%;
       padding:8px 10px;
       border-radius:8px;
@@ -140,8 +137,6 @@
       font-size:0.88rem;
       outline:none;
     }
-
-    textarea { height:70px; resize:none; }
 
     .btn-primary, .btn-secondary {
       padding:10px 14px;
@@ -164,6 +159,7 @@
       border-radius:10px;
       background:#042f2e;
       margin-top:12px;
+      font-size:0.9rem;
     }
 
     #formStatus {
@@ -185,7 +181,7 @@
 <body>
 
 <header>
-  <img src="logocoffexxx.webp" class="logo" id="coffexLogo">
+  <img src="logocoffexxx.webp" class="logo" id="coffexLogo" alt="CoffeXXX">
   <h1>CoffeXXX</h1>
   <p>Contenido exclusivo · Suscripción mensual $80.000 ARS</p>
 </header>
@@ -194,97 +190,69 @@
 
   <h2 class="section-title">Contenido exclusivo (6 fotos + 1 video)</h2>
 
-  <!-- GALERÍA -->
   <div class="grid">
-
-    <!-- FOTO 1 -->
     <div class="thumb" data-type="image" data-hd="foto1.jpg">
       <div class="thumb-inner" style="background-image:url('foto1.jpg')"></div>
     </div>
-
     <div class="thumb" data-type="image" data-hd="foto2.jpg">
       <div class="thumb-inner" style="background-image:url('foto2.jpg')"></div>
     </div>
-
     <div class="thumb" data-type="image" data-hd="foto3.jpg">
       <div class="thumb-inner" style="background-image:url('foto3.jpg')"></div>
     </div>
-
     <div class="thumb" data-type="image" data-hd="foto4.jpg">
       <div class="thumb-inner" style="background-image:url('foto4.jpg')"></div>
     </div>
-
     <div class="thumb" data-type="image" data-hd="foto5.jpg">
       <div class="thumb-inner" style="background-image:url('foto5.jpg')"></div>
     </div>
-
     <div class="thumb" data-type="image" data-hd="foto6.jpg">
       <div class="thumb-inner" style="background-image:url('foto6.jpg')"></div>
     </div>
 
-    <!-- VIDEO -->
     <div class="thumb"
          data-type="video"
          data-video="video1.mp4"
          data-poster="foto1.jpg">
       <div class="thumb-inner" style="background-image:url('foto1.jpg')"></div>
     </div>
-
   </div>
 
-  <!-- FORMULARIO -->
   <h2 class="section-title" style="margin-top:30px;">Solicitar acceso</h2>
 
   <form id="requestForm">
-
     <div class="form-group">
       <label>Nombre completo *</label>
       <input id="nombre" type="text" required>
     </div>
 
     <div class="form-group">
-      <label>Contacto (Instagram, WhatsApp, etc.) *</label>
+      <label>Contacto (Instagram / WhatsApp) *</label>
       <input id="contacto" type="text" required>
-    </div>
-
-    <div class="form-group">
-      <label>Email (opcional)</label>
-      <input id="email" type="email">
-    </div>
-
-    <div class="form-group">
-      <label>Nota para el admin (opcional)</label>
-      <textarea id="nota"></textarea>
     </div>
 
     <div class="form-group" style="margin-top:10px;">
       <label><input type="checkbox" id="acepto"> Confirmo que soy mayor de edad *</label>
     </div>
 
-    <!-- BOTÓN VER ALIAS -->
-    <button type="button" class="btn-secondary" onclick="showAlias()">
+    <button id="btnAlias" type="button" class="btn-secondary">
       Ver alias para pagar
     </button>
 
-    <!-- ALIAS (OCULTO HASTA DAR CLICK) -->
     <div id="aliasBox">
       <p><strong>Alias para pagar:</strong> <span style="color:#5eead4;">agusdente</span></p>
-      <p style="font-size:0.8rem; color:#a5f3fc;">
-        Este alias pertenece al intermediario.  
-        El dinero se envía automáticamente a la creadora Sofi.
-      </p>
 
       <div class="form-group" style="margin-top:10px;">
-        <label>Comprobante de pago *</label>
-        <input id="comprobante" type="text" placeholder="Ej: CAP-1234" required>
+        <label>Comprobante de pago (imagen o PDF) *</label>
+        <input id="comprobanteFile" type="file" accept="image/*,application/pdf" required>
       </div>
     </div>
 
-    <!-- BOTÓN ENVIAR -->
-    <button type="submit" class="btn-primary">Enviar solicitud</button>
+    <button type="submit" class="btn-primary">
+      Enviar solicitud
+    </button>
 
     <div id="formStatus"></div>
-
   </form>
 
 </main>
@@ -293,9 +261,10 @@
   CoffeXXX © Contenido exclusivo · Suscripción mensual
 </footer>
 
-<!-- FIREBASE -->
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 
 <script>
   const firebaseConfig = {
@@ -310,9 +279,9 @@
 
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
+  const storage = firebase.storage();
 
   const STORAGE_KEY = "coffexxx_request_v1";
-
   let aliasVisible = false;
   let unsubscribeDoc = null;
 
@@ -324,7 +293,7 @@
       if (type === "image") {
         const hd = thumb.dataset.hd;
         const inner = thumb.querySelector(".thumb-inner");
-        if (inner && hd) inner.style.backgroundImage = `url('${hd}')`;
+        if (inner && hd) inner.style.backgroundImage = "url('" + hd + "')";
       }
 
       if (type === "video") {
@@ -360,80 +329,86 @@
   document.addEventListener("DOMContentLoaded", () => {
     const existing = localStorage.getItem(STORAGE_KEY);
     if (existing) listenToRequest(existing);
-  });
 
-  function showAlias() {
-    const nombre = document.getElementById("nombre").value.trim();
-    const contacto = document.getElementById("contacto").value.trim();
-    const acepto = document.getElementById("acepto").checked;
-
+    const btnAlias = document.getElementById("btnAlias");
+    const form = document.getElementById("requestForm");
     const status = document.getElementById("formStatus");
 
-    if (!nombre || !contacto || !acepto) {
-      status.textContent = "Completá Nombre, Contacto y tildá la casilla de mayor de edad.";
-      status.style.color = "#f97373";
-      return;
-    }
+    btnAlias.addEventListener("click", () => {
+      const nombre = document.getElementById("nombre").value.trim();
+      const contacto = document.getElementById("contacto").value.trim();
+      const acepto = document.getElementById("acepto").checked;
 
-    document.getElementById("aliasBox").style.display = "block";
-    aliasVisible = true;
+      if (!nombre || !contacto || !acepto) {
+        status.textContent = "Completá nombre, contacto y tildá que sos mayor de edad.";
+        status.style.color = "#f97373";
+        return;
+      }
 
-    status.textContent = "Alias mostrado. Realizá el pago y enviá el comprobante.";
-    status.style.color = "#5eead4";
-  }
+      document.getElementById("aliasBox").style.display = "block";
+      aliasVisible = true;
+      status.textContent = "Alias mostrado. Realizá el pago y adjuntá el comprobante.";
+      status.style.color = "#5eead4";
+    });
 
-  document.getElementById("requestForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    const nombre = document.getElementById("nombre").value.trim();
-    const contacto = document.getElementById("contacto").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const nota = document.getElementById("nota").value.trim();
-    const comprobante = document.getElementById("comprobante").value.trim();
-    const acepto = document.getElementById("acepto").checked;
+      const nombre = document.getElementById("nombre").value.trim();
+      const contacto = document.getElementById("contacto").value.trim();
+      const acepto = document.getElementById("acepto").checked;
+      const fileInput = document.getElementById("comprobanteFile");
+      const status = document.getElementById("formStatus");
 
-    const status = document.getElementById("formStatus");
+      const file = fileInput.files[0];
 
-    if (!aliasVisible) {
-      status.textContent = "Primero tocá 'Ver alias para pagar'.";
-      status.style.color = "#f97373";
-      return;
-    }
+      if (!aliasVisible) {
+        status.textContent = "Primero tocá 'Ver alias para pagar'.";
+        status.style.color = "#f97373";
+        return;
+      }
 
-    if (!nombre || !contacto || !comprobante || !acepto) {
-      status.textContent = "Completá los datos obligatorios y el comprobante.";
-      status.style.color = "#f97373";
-      return;
-    }
+      if (!nombre || !contacto || !acepto || !file) {
+        status.textContent = "Completá todos los campos y adjuntá el comprobante.";
+        status.style.color = "#f97373";
+        return;
+      }
 
-    status.textContent = "Enviando solicitud...";
-    status.style.color = "#e5e7eb";
+      status.textContent = "Subiendo comprobante y enviando solicitud...";
+      status.style.color = "#e5e7eb";
 
-    try {
-      const ref = await db.collection("suscripciones").add({
-        nombre,
-        contacto,
-        email: email || null,
-        nota: nota || null,
-        comprobante,
-        creado: firebase.firestore.FieldValue.serverTimestamp(),
-        origen: "CoffeXXX",
-        monto: 80000,
-        moneda: "ARS",
-        desbloqueado: false
-      });
+      try {
+        // 1) Subir archivo a Storage
+        const filePath = "comprobantes/" + Date.now() + "_" + file.name;
+        const fileRef = storage.ref().child(filePath);
+        const snap = await fileRef.put(file);
+        const url = await snap.ref.getDownloadURL();
 
-      localStorage.setItem(STORAGE_KEY, ref.id);
-      listenToRequest(ref.id);
+        // 2) Guardar solicitud en Firestore
+        const ref = await db.collection("suscripciones").add({
+          nombre,
+          contacto,
+          comprobanteUrl: url,
+          comprobanteNombre: file.name,
+          comprobantePath: filePath,
+          creado: firebase.firestore.FieldValue.serverTimestamp(),
+          origen: "CoffeXXX",
+          monto: 80000,
+          moneda: "ARS",
+          desbloqueado: false
+        });
 
-      status.textContent = "Solicitud enviada. Se desbloquea cuando el admin la apruebe.";
-      status.style.color = "#4ade80";
+        localStorage.setItem(STORAGE_KEY, ref.id);
+        listenToRequest(ref.id);
 
-    } catch(err) {
-      console.error(err);
-      status.textContent = "Error al enviar la solicitud.";
-      status.style.color = "#f97373";
-    }
+        status.textContent = "Solicitud enviada. Se desbloqueará cuando el admin la apruebe.";
+        status.style.color = "#4ade80";
+      } catch (err) {
+        console.error(err);
+        status.textContent = "Error al enviar la solicitud. Intentá de nuevo.";
+        status.style.color = "#f97373";
+      }
+    });
   });
 </script>
 
