@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>CoffeXXX</title>
+  <title>CoffeXXX - Suscripción mensual</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     * { box-sizing:border-box; margin:0; padding:0; }
@@ -89,6 +89,26 @@
       margin-top:4px;
     }
 
+    .catalog-summary {
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      background:rgba(15,23,42,0.96);
+      border:1px solid rgba(148,163,184,0.7);
+      font-size:0.82rem;
+      color:rgba(209,213,219,0.95);
+      max-width:320px;
+    }
+
+    .catalog-summary ul {
+      padding-left:18px;
+      margin-top:6px;
+    }
+
+    .catalog-summary li {
+      margin-bottom:3px;
+    }
+
     .alias-box {
       margin-top:6px;
       padding:8px 10px;
@@ -122,56 +142,6 @@
       margin-top:4px;
       font-size:0.75rem;
       color:rgba(251,191,36,0.95);
-    }
-
-    /* CATÁLOGO */
-    .catalog {
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:12px;
-      margin-top:10px;
-    }
-
-    @media (max-width:900px) {
-      .catalog {
-        grid-template-columns:repeat(2,minmax(0,1fr));
-      }
-    }
-
-    @media (max-width:600px) {
-      .catalog {
-        grid-template-columns:1fr;
-      }
-    }
-
-    .catalog-card {
-      padding:10px;
-      border-radius:12px;
-      background:rgba(15,23,42,0.96);
-      border:1px solid rgba(148,163,184,0.7);
-      font-size:0.8rem;
-    }
-
-    .catalog-card h3 {
-      font-size:0.9rem;
-      margin-bottom:4px;
-    }
-
-    .catalog-tag {
-      display:inline-flex;
-      padding:2px 7px;
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,0.7);
-      font-size:0.7rem;
-      margin-bottom:4px;
-      text-transform:uppercase;
-      letter-spacing:0.06em;
-    }
-
-    .catalog-price {
-      margin-top:4px;
-      font-size:0.82rem;
-      color:rgba(190,242,100,0.95);
     }
 
     /* FORMULARIO */
@@ -323,7 +293,7 @@
       height:100%;
       background-size:cover;
       background-position:center;
-      filter:blur(16px);
+      filter:blur(18px);
       transform:scale(1.1);
       transition:filter 0.4s ease, transform 0.4s ease;
     }
@@ -440,39 +410,13 @@
         </div>
       </div>
 
-      <div style="font-size:0.78rem; color:rgba(148,163,184,0.95); max-width:260px;">
-        El pago se realiza por transferencia a un <strong>intermediario</strong> y luego el acceso se habilita en este mismo navegador cuando la suscripción se apruebe.
-      </div>
-    </div>
-  </section>
-
-  <!-- CATÁLOGO DE PACKS -->
-  <section>
-    <div class="section-title">Catálogo CoffeXXX</div>
-    <p class="section-text">
-      Todo el contenido de CoffeXXX se incluye dentro de la suscripción mensual. A modo de referencia, este es el catálogo:
-    </p>
-
-    <div class="catalog no-select">
-      <div class="catalog-card">
-        <div class="catalog-tag">Pack fotos</div>
-        <h3>Galería de fotos HD</h3>
-        <p>Fotos exclusivas en alta calidad, sin marca de agua, solo disponibles para suscriptores activos.</p>
-        <p class="catalog-price">Incluido en la suscripción</p>
-      </div>
-
-      <div class="catalog-card">
-        <div class="catalog-tag">Pack videos</div>
-        <h3>Clips de video privados</h3>
-        <p>Videos seleccionados y actualizados periódicamente, visibles solo con la suscripción activa.</p>
-        <p class="catalog-price">Incluido en la suscripción</p>
-      </div>
-
-      <div class="catalog-card">
-        <div class="catalog-tag">Full acceso</div>
-        <h3>Acceso completo CoffeXXX</h3>
-        <p>Acceso al contenido actual y a futuras actualizaciones durante el período de tu suscripción.</p>
-        <p class="catalog-price">$ 80.000 ARS / mes</p>
+      <div class="catalog-summary">
+        <strong>¿Qué incluye CoffeXXX?</strong>
+        <ul>
+          <li>Acceso al contenido exclusivo activo durante tu período de suscripción.</li>
+          <li>Actualizaciones dentro del espacio CoffeXXX mientras tu suscripción esté vigente.</li>
+          <li>Todo gestionado mediante un intermediario de pago y habilitación manual.</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -540,98 +484,118 @@
 
           <div id="formStatus" class="status-msg"></div>
           <div class="note">
-            Una vez aprobada tu suscripción en el sistema, las imágenes y videos se desbloquearán automáticamente en este navegador.
+            Una vez aprobada tu suscripción en el sistema, el contenido se desbloqueará automáticamente en este navegador.
           </div>
         </div>
       </form>
     </div>
   </section>
 
-  <!-- GALERÍA -->
+  <!-- GALERÍA: 6 FOTOS + 1 VIDEO (BLUR AUTOMÁTICO) -->
   <section>
-    <div class="gallery-section-title">Catálogo CoffeXXX (vista previa borrosa)</div>
+    <div class="gallery-section-title">CoffeXXX (vista previa borrosa)</div>
     <div class="gallery no-select" id="gallery">
-      <!-- IMAGEN 1 -->
-      <div class="thumb" data-type="image"
-           data-id="1"
-           data-hd="IMG1-HD.jpg">
-        <div class="thumb-inner"
-             style="background-image:url('IMG1-BLUR.jpg');">
-        </div>
+
+      <!-- FOTO 1 -->
+      <div class="thumb" data-type="image" data-id="1" data-hd="foto1.jpg">
+        <div class="thumb-inner" style="background-image:url('foto1.jpg');"></div>
         <div class="thumb-overlay">
           <div>
-            <div class="thumb-label">Imagen</div>
-            <div class="thumb-lock"><span class="icon">🔒</span><span class="lock-text">Bloqueado</span></div>
+            <div class="thumb-label">Contenido</div>
+            <div class="thumb-lock">
+              <span class="icon">🔒</span><span class="lock-text">Bloqueado</span>
+            </div>
           </div>
-          <div class="thumb-footer">Foto 1</div>
+          <div class="thumb-footer">Contenido 1</div>
         </div>
       </div>
 
-      <!-- IMAGEN 2 -->
-      <div class="thumb" data-type="image"
-           data-id="2"
-           data-hd="IMG2-HD.jpg">
-        <div class="thumb-inner"
-             style="background-image:url('IMG2-BLUR.jpg');">
-        </div>
+      <!-- FOTO 2 -->
+      <div class="thumb" data-type="image" data-id="2" data-hd="foto2.jpg">
+        <div class="thumb-inner" style="background-image:url('foto2.jpg');"></div>
         <div class="thumb-overlay">
           <div>
-            <div class="thumb-label">Imagen</div>
-            <div class="thumb-lock"><span class="icon">🔒</span><span class="lock-text">Bloqueado</span></div>
+            <div class="thumb-label">Contenido</div>
+            <div class="thumb-lock">
+              <span class="icon">🔒</span><span class="lock-text">Bloqueado</span>
+            </div>
           </div>
-          <div class="thumb-footer">Foto 2</div>
+          <div class="thumb-footer">Contenido 2</div>
         </div>
       </div>
 
-      <!-- IMAGEN 3 -->
-      <div class="thumb" data-type="image"
-           data-id="3"
-           data-hd="IMG3-HD.jpg">
-        <div class="thumb-inner"
-             style="background-image:url('IMG3-BLUR.jpg');">
-        </div>
+      <!-- FOTO 3 -->
+      <div class="thumb" data-type="image" data-id="3" data-hd="foto3.jpg">
+        <div class="thumb-inner" style="background-image:url('foto3.jpg');"></div>
         <div class="thumb-overlay">
           <div>
-            <div class="thumb-label">Imagen</div>
-            <div class="thumb-lock"><span class="icon">🔒</span><span class="lock-text">Bloqueado</span></div>
+            <div class="thumb-label">Contenido</div>
+            <div class="thumb-lock">
+              <span class="icon">🔒</span><span class="lock-text">Bloqueado</span>
+            </div>
           </div>
-          <div class="thumb-footer">Foto 3</div>
+          <div class="thumb-footer">Contenido 3</div>
         </div>
       </div>
 
-      <!-- VIDEO 1 -->
-      <div class="thumb" data-type="video"
-           data-id="v1"
-           data-video="VIDEO1.mp4"
-           data-poster="VIDEO1-BLUR.jpg">
-        <div class="thumb-inner"
-             style="background-image:url('VIDEO1-BLUR.jpg');">
-        </div>
+      <!-- FOTO 4 -->
+      <div class="thumb" data-type="image" data-id="4" data-hd="foto4.jpg">
+        <div class="thumb-inner" style="background-image:url('foto4.jpg');"></div>
         <div class="thumb-overlay">
           <div>
-            <div class="thumb-label">Video</div>
-            <div class="thumb-lock"><span class="icon">🔒</span><span class="lock-text">Bloqueado</span></div>
+            <div class="thumb-label">Contenido</div>
+            <div class="thumb-lock">
+              <span class="icon">🔒</span><span class="lock-text">Bloqueado</span>
+            </div>
           </div>
-          <div class="thumb-footer">Video 1</div>
+          <div class="thumb-footer">Contenido 4</div>
         </div>
       </div>
 
-      <!-- VIDEO 2 -->
-      <div class="thumb" data-type="video"
-           data-id="v2"
-           data-video="VIDEO2.mp4"
-           data-poster="VIDEO2-BLUR.jpg">
-        <div class="thumb-inner"
-             style="background-image:url('VIDEO2-BLUR.jpg');">
-        </div>
+      <!-- FOTO 5 -->
+      <div class="thumb" data-type="image" data-id="5" data-hd="foto5.jpg">
+        <div class="thumb-inner" style="background-image:url('foto5.jpg');"></div>
         <div class="thumb-overlay">
           <div>
-            <div class="thumb-label">Video</div>
-            <div class="thumb-lock"><span class="icon">🔒</span><span class="lock-text">Bloqueado</span></div>
+            <div class="thumb-label">Contenido</div>
+            <div class="thumb-lock">
+              <span class="icon">🔒</span><span class="lock-text">Bloqueado</span>
+            </div>
           </div>
-          <div class="thumb-footer">Video 2</div>
+          <div class="thumb-footer">Contenido 5</div>
         </div>
       </div>
+
+      <!-- FOTO 6 -->
+      <div class="thumb" data-type="image" data-id="6" data-hd="foto6.jpg">
+        <div class="thumb-inner" style="background-image:url('foto6.jpg');"></div>
+        <div class="thumb-overlay">
+          <div>
+            <div class="thumb-label">Contenido</div>
+            <div class="thumb-lock">
+              <span class="icon">🔒</span><span class="lock-text">Bloqueado</span>
+            </div>
+          </div>
+          <div class="thumb-footer">Contenido 6</div>
+        </div>
+      </div>
+
+      <!-- VIDEO -->
+      <div class="thumb" data-type="video" data-id="v1"
+           data-video="video1.mp4"
+           data-poster="foto6.jpg">
+        <div class="thumb-inner" style="background-image:url('foto6.jpg');"></div>
+        <div class="thumb-overlay">
+          <div>
+            <div class="thumb-label">Contenido</div>
+            <div class="thumb-lock">
+              <span class="icon">🔒</span><span class="lock-text">Bloqueado</span>
+            </div>
+          </div>
+          <div class="thumb-footer">Contenido 7</div>
+        </div>
+      </div>
+
     </div>
 
     <p class="note">
@@ -649,7 +613,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
 <script>
-  // === RELLENAR CON TU CONFIG DE FIREBASE ===
+  // === COMPLETAR CON TU CONFIG DE FIREBASE ===
   const firebaseConfig = {
     apiKey: "TU_API_KEY",
     authDomain: "TU_PROYECTO.firebaseapp.com",
@@ -664,7 +628,6 @@
 
   const STORAGE_KEY = "coffexxx_request_id_v1";
 
-  // Bloquear botón derecho y arrastrar
   document.addEventListener("contextmenu", e => e.preventDefault());
   document.addEventListener("dragstart", e => e.preventDefault());
 
@@ -800,7 +763,6 @@
 
       formStatus.textContent = "Solicitud enviada. Cuando Sofi apruebe tu suscripción, el contenido se desbloqueará en este navegador ✅";
       formStatus.className = "status-msg status-ok";
-      // No reseteo del todo para que el usuario siga viendo el alias
     } catch (err) {
       console.error(err);
       formStatus.textContent = "Hubo un error al enviar tu solicitud. Probá de nuevo en unos minutos.";
