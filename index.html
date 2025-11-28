@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Pack Exclusivo - Suscripción mensual</title>
+  <title>CoffeXXX - Suscripción mensual</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     * { box-sizing:border-box; margin:0; padding:0; }
@@ -26,7 +26,7 @@
     }
 
     header h1 {
-      font-size:1.3rem;
+      font-size:1.4rem;
       font-weight:600;
     }
 
@@ -96,6 +96,7 @@
       background:rgba(15,23,42,0.98);
       border:1px dashed rgba(148,163,184,0.9);
       font-size:0.85rem;
+      display:none; /* OCULTO AL INICIO */
     }
 
     .alias-label {
@@ -117,486 +118,40 @@
       color:rgba(148,163,184,0.95);
     }
 
-    /* FORMULARIO */
-    .form-card {
-      margin-top:6px;
-      padding:14px 12px;
-      border-radius:14px;
-      background:rgba(15,23,42,0.97);
-      border:1px solid rgba(148,163,184,0.7);
+    .alias-warn {
+      margin-top:4px;
+      font-size:0.75rem;
+      color:rgba(251,191,36,0.95);
     }
 
-    .form-grid {
+    /* CATÁLOGO */
+    .catalog {
       display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:10px;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+      margin-top:10px;
     }
 
-    @media (max-width:700px) {
-      .form-grid {
+    @media (max-width:900px) {
+      .catalog {
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+    }
+
+    @media (max-width:600px) {
+      .catalog {
         grid-template-columns:1fr;
       }
     }
 
-    .form-field {
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-      font-size:0.8rem;
-    }
-
-    .form-field label {
-      color:rgba(226,232,240,0.95);
-    }
-
-    .form-input, .form-textarea, .form-select {
-      padding:7px 9px;
-      border-radius:8px;
-      border:1px solid rgba(148,163,184,0.9);
-      background:#020617;
-      color:#e5e7eb;
-      font-size:0.85rem;
-      outline:none;
-    }
-
-    .form-input::placeholder,
-    .form-textarea::placeholder {
-      color:rgba(148,163,184,0.9);
-    }
-
-    .form-textarea {
-      min-height:60px;
-      resize:vertical;
-    }
-
-    .form-footer {
-      margin-top:10px;
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      font-size:0.78rem;
-      color:rgba(148,163,184,0.95);
-    }
-
-    .form-checkbox-row {
-      display:flex;
-      align-items:flex-start;
-      gap:6px;
-      font-size:0.78rem;
-    }
-
-    .form-checkbox-row input {
-      margin-top:2px;
-    }
-
-    .btn-submit {
-      margin-top:6px;
-      padding:8px 16px;
-      border-radius:999px;
-      border:none;
-      background:linear-gradient(135deg,#22c55e,#16a34a);
-      font-size:0.85rem;
-      font-weight:500;
-      cursor:pointer;
-      color:#020617;
-      align-self:flex-start;
-    }
-
-    .status-msg {
-      margin-top:6px;
-      font-size:0.8rem;
-    }
-    .status-ok { color:#4ade80; }
-    .status-error { color:#f97373; }
-
-    /* GALERÍA */
-    .gallery-section-title {
-      margin-top:4px;
-      font-size:0.9rem;
-      font-weight:600;
-    }
-
-    .gallery {
-      margin-top:8px;
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:10px;
-    }
-
-    @media (max-width:800px) {
-      .gallery {
-        grid-template-columns:repeat(2,minmax(0,1fr));
-      }
-    }
-
-    @media (max-width:540px) {
-      .gallery {
-        grid-template-columns:repeat(2,minmax(0,1fr));
-      }
-    }
-
-    .thumb {
-      position:relative;
+    .catalog-card {
+      padding:10px;
       border-radius:12px;
-      overflow:hidden;
-      background:#020617;
-      border:1px solid rgba(148,163,184,0.5);
-      aspect-ratio:3/4;
-      user-select:none;
-      -webkit-user-drag:none;
-      touch-action:none;
-    }
-
-    .thumb-inner {
-      width:100%;
-      height:100%;
-      background-size:cover;
-      background-position:center;
-      filter:blur(16px);
-      transform:scale(1.1);
-      transition:filter 0.4s ease, transform 0.4s ease;
-    }
-
-    .thumb.unlocked .thumb-inner {
-      filter:none;
-      transform:scale(1.02);
-    }
-
-    .thumb-overlay {
-      position:absolute;
-      inset:0;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      padding:8px;
-      background:linear-gradient(to bottom,rgba(15,23,42,0.9),rgba(15,23,42,0.05),rgba(15,23,42,0.9));
-      pointer-events:none;
-      font-size:0.7rem;
-    }
-
-    .thumb-label {
-      align-self:flex-start;
-      padding:3px 7px;
-      border-radius:999px;
+      background:rgba(15,23,42,0.96);
       border:1px solid rgba(148,163,184,0.7);
-      background:rgba(15,23,42,0.96);
-      text-transform:uppercase;
-      letter-spacing:0.08em;
-      font-size:0.68rem;
+      font-size:0.8rem;
     }
 
-    .thumb-lock {
-      align-self:flex-start;
-      margin-top:4px;
-      padding:3px 7px;
-      border-radius:999px;
-      border:1px solid rgba(248,250,252,0.7);
-      background:rgba(15,23,42,0.96);
-      display:inline-flex;
-      align-items:center;
-      gap:4px;
-    }
-
-    .thumb-lock span.icon {
-      font-size:0.85rem;
-    }
-
-    .thumb.unlocked .thumb-lock {
-      background:#22c55e;
-      color:#022c22;
-      border-color:rgba(240,253,250,0.95);
-    }
-
-    .thumb-footer {
-      align-self:flex-start;
-      padding:3px 7px;
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,0.7);
-      background:rgba(15,23,42,0.96);
-    }
-
-    .note {
-      font-size:0.75rem;
-      color:rgba(148,163,184,0.95);
-      margin-top:8px;
-    }
-
-    footer {
-      margin-top:auto;
-      padding:12px;
-      text-align:center;
-      font-size:0.7rem;
-      color:rgba(148,163,184,0.95);
-      border-top:1px solid rgba(15,23,42,0.9);
-    }
-
-    /* pequeños bloqueos */
-    img, video {
-      -webkit-user-drag:none;
-      user-select:none;
-      pointer-events:none;
-    }
-
-    .no-select {
-      user-select:none;
-      -webkit-user-select:none;
-      -ms-user-select:none;
-    }
-  </style>
-</head>
-<body>
-
-<header class="no-select">
-  <h1>Pack exclusivo - Suscripción mensual</h1>
-  <p>Pagás tu suscripción cada mes por transferencia y accedés al contenido privado una vez aprobado.</p>
-</header>
-
-<main>
-  <!-- INFO SUSCRIPCIÓN -->
-  <section>
-    <div class="section-title">Cómo funciona la suscripción</div>
-    <p class="section-text">
-      1) Realizás la <strong>transferencia mensual</strong> por el valor de la suscripción.<br>
-      2) Completás el formulario con tus datos y comprobante de pago.<br>
-      3) Una vez que el intermediario confirme tu pago, se desbloquearán las fotos y videos en este navegador.
-    </p>
-
-    <div class="price-box no-select">
-      <div>
-        <div class="price-main">
-          $ 7.000 <span>ARS / suscripción mensual</span> <!-- CAMBIÁ EL MONTO -->
-        </div>
-        <div class="price-note">
-          El valor puede variar con el tiempo. Siempre verificá el precio actualizado antes de pagar.
-        </div>
-      </div>
-      <div class="alias-box">
-        <div class="alias-label">Alias para transferencias (intermediario autorizado)</div>
-        <div class="alias-value">agusdente</div> <!-- ALIAS -->
-        <div class="alias-help">
-          Enviá la transferencia a este alias. Luego completá el formulario con tus datos y comprobante.
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FORMULARIO DE ALTA -->
-  <section>
-    <div class="section-title">Formulario de suscripción</div>
-    <div class="form-card">
-      <form id="requestForm">
-        <div class="form-grid">
-          <div class="form-field">
-            <label for="nombre">Nombre y apellido *</label>
-            <input id="nombre" name="nombre" class="form-input" type="text" required placeholder="Tu nombre completo">
-          </div>
-          <div class="form-field">
-            <label for="contacto">Contacto (Instagram / WhatsApp) *</label>
-            <input id="contacto" name="contacto" class="form-input" type="text" required placeholder="@usuario o número">
-          </div>
-          <div class="form-field">
-            <label for="email">Correo electrónico (opcional)</label>
-            <input id="email" name="email" class="form-input" type="email" placeholder="email@ejemplo.com">
-          </div>
-          <div class="form-field">
-            <label for="comprobante">Comprobante de pago *</label>
-            <input id="comprobante" name="comprobante" class="form-input" type="text" required placeholder="N° de operación, alias usado, etc.">
-          </div>
-        </div>
-
-        <div class="form-field" style="margin-top:10px;">
-          <label for="nota">Mensaje adicional (opcional)</label>
-          <textarea id="nota" name="nota" class="form-textarea" placeholder="Cualquier aclaración que quieras agregar..."></textarea>
-        </div>
-
-        <div class="form-footer">
-          <label class="form-checkbox-row">
-            <input id="acepto" type="checkbox" required>
-            <span>Confirmo que soy mayor de edad y acepto que el contenido es privado y no se puede compartir.</span>
-          </label>
-
-          <button type="submit" class="btn-submit">Enviar solicitud de acceso</button>
-
-          <div id="formStatus" class="status-msg"></div>
-          <div class="note">
-            Una vez aprobada tu solicitud en el sistema, se desbloquearán las imágenes y videos en este navegador automáticamente.
-          </div>
-        </div>
-      </form>
-    </div>
-  </section>
-
-  <!-- GALERÍA -->
-  <section>
-    <div class="gallery-section-title">Vista previa (borrosa hasta aprobación)</div>
-    <div class="gallery no-select" id="gallery">
-      <!-- IMAGEN 1 -->
-      <div class="thumb" data-type="image"
-           data-id="1"
-           data-hd="IMG1-HD.jpg">
-        <div class="thumb-inner"
-             style="background-image:url('IMG1-BLUR.jpg');">
-        </div>
-        <div class="thumb-overlay">
-          <div>
-            <div class="thumb-label">Imagen</div>
-            <div class="thumb-lock"><span class="icon">🔒</span><span class="lock-text">Bloqueado</span></div>
-          </div>
-          <div class="thumb-footer">Foto 1</div>
-        </div>
-      </div>
-
-      <!-- IMAGEN 2 -->
-      <div class="thumb" data-type="image"
-           data-id="2"
-           data-hd="IMG2-HD.jpg">
-        <div class="thumb-inner"
-             style="background-image:url('IMG2-BLUR.jpg');">
-        </div>
-        <div class="thumb-overlay">
-          <div>
-            <div class="thumb-label">Imagen</div>
-            <div class="thumb-lock"><span class="icon">🔒</span><span class="lock-text">Bloqueado</span></div>
-          </div>
-          <div class="thumb-footer">Foto 2</div>
-        </div>
-      </div>
-
-      <!-- IMAGEN 3 -->
-      <div class="thumb" data-type="image"
-           data-id="3"
-           data-hd="IMG3-HD.jpg">
-        <div class="thumb-inner"
-             style="background-image:url('IMG3-BLUR.jpg');">
-        </div>
-        <div class="thumb-overlay">
-          <div>
-            <div class="thumb-label">Imagen</div>
-            <div class="thumb-lock"><span class="icon">🔒</span><span class="lock-text">Bloqueado</span></div>
-          </div>
-          <div class="thumb-footer">Foto 3</div>
-        </div>
-      </div>
-
-      <!-- VIDEO 1 -->
-      <div class="thumb" data-type="video"
-           data-id="v1"
-           data-video="VIDEO1.mp4"
-           data-poster="VIDEO1-BLUR.jpg">
-        <div class="thumb-inner"
-             style="background-image:url('VIDEO1-BLUR.jpg');">
-        </div>
-        <div class="thumb-overlay">
-          <div>
-            <div class="thumb-label">Video</div>
-            <div class="thumb-lock"><span class="icon">🔒</span><span class="lock-text">Bloqueado</span></div>
-          </div>
-          <div class="thumb-footer">Video 1</div>
-        </div>
-      </div>
-
-      <!-- VIDEO 2 -->
-      <div class="thumb" data-type="video"
-           data-id="v2"
-           data-video="VIDEO2.mp4"
-           data-poster="VIDEO2-BLUR.jpg">
-        <div class="thumb-inner"
-             style="background-image:url('VIDEO2-BLUR.jpg');">
-        </div>
-        <div class="thumb-overlay">
-          <div>
-            <div class="thumb-label">Video</div>
-            <div class="thumb-lock"><span class="icon">🔒</span><span class="lock-text">Bloqueado</span></div>
-          </div>
-          <div class="thumb-footer">Video 2</div>
-        </div>
-      </div>
-    </div>
-
-    <p class="note">
-      Bloqueamos el click derecho y las descargas directas, pero ninguna página puede evitar que alguien haga captura de pantalla.
-    </p>
-  </section>
-</main>
-
-<footer class="no-select">
-  © 2025 · Contenido privado. Prohibida su difusión o reventa.
-</footer>
-
-<!-- Firebase (usar compat para hacerlo simple) -->
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-
-<script>
-  // === RELLENAR CON TU CONFIG DE FIREBASE ===
-  const firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "TU_PROYECTO.firebaseapp.com",
-    projectId: "TU_PROYECTO",
-    storageBucket: "TU_PROYECTO.appspot.com",
-    messagingSenderId: "XXX",
-    appId: "XXX"
-  };
-
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-
-  const STORAGE_KEY = "suscripcion_request_id_v1";
-
-  // Bloquear botón derecho y arrastrar
-  document.addEventListener("contextmenu", e => e.preventDefault());
-  document.addEventListener("dragstart", e => e.preventDefault());
-
-  function applyUnlockedState() {
-    const gallery = document.getElementById("gallery");
-    if (!gallery) return;
-    const thumbs = gallery.querySelectorAll(".thumb");
-
-    thumbs.forEach(thumb => {
-      const type = thumb.getAttribute("data-type");
-      const lockText = thumb.querySelector(".lock-text");
-
-      thumb.classList.add("unlocked");
-
-      if (lockText) lockText.textContent = "Desbloqueado";
-
-      if (type === "image") {
-        const hdUrl = thumb.getAttribute("data-hd");
-        const inner = thumb.querySelector(".thumb-inner");
-        if (inner && hdUrl) {
-          inner.style.backgroundImage = "url('" + hdUrl + "')";
-        }
-      }
-
-      if (type === "video") {
-        const videoSrc = thumb.getAttribute("data-video");
-        const poster = thumb.getAttribute("data-poster");
-        if (videoSrc) {
-          thumb.innerHTML = `
-            <video controls playsinline controlsList="nodownload"
-                   style="width:100%;height:100%;display:block;object-fit:cover;border-radius:12px;"
-                   poster="${poster || ''}">
-              <source src="${videoSrc}" type="video/mp4">
-              Tu navegador no soporta la reproducción de video.
-            </video>
-          `;
-        }
-      }
-    });
-  }
-
-  let unsubscribeDoc = null;
-
-  function listenToRequest(requestId) {
-    if (!requestId) return;
-    if (unsubscribeDoc) unsubscribeDoc();
-
-    unsubscribeDoc = db.collection("suscripciones").doc(requestId)
-      .onSnapshot(doc => {
-        if (!doc.exists) return;
-        const data = doc.data();
-        if (data.desbloqueado) {
-          applyUnlockedState();
-          const status = document.getElementById("formStatus");
-          if (status) {
-            status.textContent = "Tu suscripción
+    .catalog-card h3 {
+      font-size:0.9rem;
+      margin-bottom:4px;
