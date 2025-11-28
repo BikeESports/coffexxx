@@ -200,6 +200,7 @@
     .btn-unlock { background:#22c55e; color:#022c22; }
     .btn-lock { background:#f97316; color:#1f2933; }
     .btn-copy-id { background:#111827; color:#e5e7eb;border:1px solid rgba(55,65,81,0.9); }
+    .btn-view-doc { background:#0ea5e9; color:#02273b; }
 
     .table-wrapper {
       overflow:auto;
@@ -279,13 +280,12 @@
 <!-- LOGIN -->
 <div id="loginScreen">
   <div class="login-card">
-    <img src="logocoffexxx.webp" class="login-logo">
+    <img src="logocoffexxx.webp" class="login-logo" alt="CoffeXXX">
 
     <div class="login-title">Panel admin CoffeXXX</div>
     <div class="login-subtitle">Ingresá con tu correo y contraseña de administrador.</div>
 
     <form id="loginForm" autocomplete="off">
-
       <div class="login-field">
         <label for="loginEmail">Correo</label>
         <input id="loginEmail"
@@ -316,7 +316,6 @@
         No uses esta contraseña como clave real de tu correo.  
         Es solo para este panel.
       </div>
-
     </form>
   </div>
 </div>
@@ -324,7 +323,7 @@
 <!-- APP -->
 <div id="adminApp">
   <header>
-    <img src="logocoffexxx.webp" class="logo">
+    <img src="logocoffexxx.webp" class="logo" alt="CoffeXXX">
     <div>
       <h1>Panel admin CoffeXXX</h1>
       <p>Gestioná las suscripciones y desbloqueá el contenido.</p>
@@ -337,7 +336,7 @@
       <div>
         <strong>Estado:</strong> <span id="adminStatus">Conectando...</span>
       </div>
-      <div class="status-right">
+      <div>
         <span class="badge-env">CoffeXXX</span>
         <button class="btn btn-refresh" onclick="manualRefresh()">🔄 Actualizar</button>
         <button class="btn btn-logout" onclick="logout()">🚪 Cerrar sesión</button>
@@ -351,9 +350,8 @@
             <th>Fecha</th>
             <th>Cliente</th>
             <th>Contacto</th>
-            <th>Pago</th>
-            <th>Nota</th>
-            <th>Origen</th>
+            <th>Comprobante</th>
+            <th>Origen / Monto</th>
             <th>Estado</th>
             <th>Acciones</th>
             <th>ID</th>
@@ -364,7 +362,7 @@
     </div>
 
     <div class="small-note">
-      El contenido se desbloquea en el navegador del cliente automáticamente.
+      Al desbloquear, el cliente verá el contenido en el navegador donde hizo la solicitud.
     </div>
 
   </main>
@@ -372,13 +370,13 @@
   <footer>CoffeXXX · Panel interno</footer>
 </div>
 
-<!-- FIREBASE -->
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
 <script>
-  /* ADMIN LOGIN */
-  const ADMIN_EMAIL = "agustindentella68@gmail.com";
+  /* LOGIN CONFIG (solo panel, no es tu Gmail real) */
+  const ADMIN_EMAIL = "agustindentella@gmail.com";
   const ADMIN_PASS  = "919111sofixxx";
 
   /* FIREBASE */
@@ -438,45 +436,58 @@
   function renderSnapshot(snapshot) {
     tableBody.innerHTML = "";
     if (snapshot.empty) {
-      tableBody.innerHTML = "<tr><td colspan='9'>No hay solicitudes.</td></tr>";
+      tableBody.innerHTML = "<tr><td colspan='8'>No hay solicitudes.</td></tr>";
       return;
     }
 
     snapshot.forEach(doc => {
       const d = doc.data();
 
-      const fila = document.createElement("tr");
+      const fecha = formatDate(d.creado);
+      const nombre = d.nombre || "";
+      const contacto = d.contacto || "";
+      const origen = d.origen || "CoffeXXX";
+      const monto = d.monto || 0;
+      const moneda = d.moneda || "ARS";
+      const desbloqueado = !!d.desbloqueado;
 
-      fila.innerHTML = `
-        <td>${formatDate(d.creado)}</td>
-        <td>${d.nombre || ""}</td>
-        <td>${d.contacto || ""}${d.email ? `<br><span class='mono'>${d.email}</span>` : ""}</td>
+      const comprobanteNombre = d.comprobanteNombre || "(sin nombre)";
+      const comprobanteUrl = d.comprobanteUrl || null;
+
+      const tr = document.createElement("tr");
+
+      tr.innerHTML = `
+        <td>${fecha}</td>
+        <td>${nombre}</td>
+        <td>${contacto}</td>
         <td>
-          <span class="mono">${d.comprobante || "-"}</span>
-          <br>
-          <span class="badge badge-amount">${(d.monto||0).toLocaleString("es-AR")} ${d.moneda||"ARS"}</span>
+          ${comprobanteUrl
+            ? `<button class="btn-small btn-view-doc" onclick="openComprobante('${encodeURI(comprobanteUrl)}')">
+                 Ver comprobante
+               </button><br><span class="mono">${comprobanteNombre}</span>`
+            : `<span class="mono">Sin archivo</span>`}
         </td>
-        <td>${d.nota || "-"}</td>
-        <td><span class="badge badge-origin">${d.origen || "CoffeXXX"}</span></td>
         <td>
-          <span class="badge ${d.desbloqueado ? 'badge-ok' : 'badge-pend'}">
-            ${d.desbloqueado ? 'Desbloqueado' : 'Pendiente'}
+          <span class="badge badge-origin">${origen}</span><br>
+          <span class="badge badge-amount">${monto.toLocaleString("es-AR")} ${moneda}</span>
+        </td>
+        <td>
+          <span class="badge ${desbloqueado ? "badge-ok" : "badge-pend"}">
+            ${desbloqueado ? "Desbloqueado" : "Pendiente"}
           </span>
         </td>
         <td>
-          ${d.desbloqueado
+          ${desbloqueado
             ? `<button class="btn-small btn-lock" onclick="setUnlocked('${doc.id}', false)">Bloquear</button>`
-            : `<button class="btn-small btn-unlock" onclick="setUnlocked('${doc.id}', true)">Desbloquear</button>`
-          }
+            : `<button class="btn-small btn-unlock" onclick="setUnlocked('${doc.id}', true)">Desbloquear</button>`}
         </td>
         <td class="mono">
-          ${doc.id}
-          <br>
+          ${doc.id}<br>
           <button class="btn-small btn-copy-id" onclick="copyId('${doc.id}')">copiar</button>
         </td>
       `;
 
-      tableBody.appendChild(fila);
+      tableBody.appendChild(tr);
     });
   }
 
@@ -485,25 +496,60 @@
     adminStatus.textContent = "Escuchando suscripciones...";
     unsubscribe = db.collection("suscripciones")
       .orderBy("creado","desc")
-      .onSnapshot(snap => renderSnapshot(snap));
+      .onSnapshot(
+        snap => renderSnapshot(snap),
+        err => {
+          console.error(err);
+          adminStatus.textContent = "Error al escuchar datos.";
+        }
+      );
   }
 
   async function manualRefresh() {
-    adminStatus.textContent = "Actualizando...";
-    const snap = await db.collection("suscripciones").orderBy("creado","desc").get();
-    renderSnapshot(snap);
-    adminStatus.textContent = "Listado actualizado.";
+    try {
+      adminStatus.textContent = "Actualizando...";
+      const snap = await db.collection("suscripciones").orderBy("creado","desc").get();
+      renderSnapshot(snap);
+      adminStatus.textContent = "Listado actualizado.";
+    } catch (err) {
+      console.error(err);
+      adminStatus.textContent = "Error al actualizar.";
+    }
   }
 
   async function setUnlocked(id, val) {
-    await db.collection("suscripciones").doc(id).update({ desbloqueado: val });
-    adminStatus.textContent = val ? "Desbloqueado ✓" : "Bloqueado";
+    try {
+      await db.collection("suscripciones").doc(id).update({ desbloqueado: val });
+      adminStatus.textContent = val ? "Suscripción desbloqueada ✓" : "Suscripción bloqueada.";
+    } catch (err) {
+      console.error(err);
+      adminStatus.textContent = "Error al cambiar el estado.";
+    }
   }
 
   function copyId(id) {
-    navigator.clipboard.writeText(id);
-    adminStatus.textContent = "ID copiado.";
+    navigator.clipboard.writeText(id).then(() => {
+      adminStatus.textContent = "ID copiado.";
+    }).catch(() => {
+      adminStatus.textContent = "No se pudo copiar el ID.";
+    });
   }
+
+  function openComprobante(url) {
+    try {
+      window.open(url, "_blank");
+    } catch (e) {
+      console.error(e);
+      adminStatus.textContent = "No se pudo abrir el comprobante.";
+    }
+  }
+
+  // Exponer funciones a window para usarlas en los onclick
+  window.manualRefresh   = manualRefresh;
+  window.setUnlocked     = setUnlocked;
+  window.copyId          = copyId;
+  window.openComprobante = openComprobante;
+  window.logout          = logout;
 </script>
 
 </body>
