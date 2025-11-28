@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <title>CoffeXXX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/webp" href="logocoffexxx.webp">
+
   <style>
     * { box-sizing:border-box; margin:0; padding:0; }
 
@@ -23,6 +27,7 @@
       position:sticky;
       top:0;
       z-index:5;
+      text-align:center;
     }
 
     header h1 {
@@ -44,6 +49,17 @@
       display:flex;
       flex-direction:column;
       gap:22px;
+    }
+
+    /* LOGO TRANSPARENTE VISUAL (fondo negro desaparece) */
+    img.logo {
+      width:150px;
+      height:auto;
+      mix-blend-mode: lighten;
+      display:block;
+      margin:0 auto 20px;
+      user-select:none;
+      -webkit-user-drag:none;
     }
 
     .section-title {
@@ -116,7 +132,7 @@
       background:rgba(15,23,42,0.98);
       border:1px dashed rgba(148,163,184,0.9);
       font-size:0.85rem;
-      display:none; /* OCULTO AL INICIO */
+      display:none;
     }
 
     .alias-label {
@@ -144,7 +160,6 @@
       color:rgba(251,191,36,0.95);
     }
 
-    /* FORMULARIO */
     .form-card {
       margin-top:6px;
       padding:14px 12px;
@@ -172,10 +187,6 @@
       font-size:0.8rem;
     }
 
-    .form-field label {
-      color:rgba(226,232,240,0.95);
-    }
-
     .form-input, .form-textarea {
       padding:7px 9px;
       border-radius:8px;
@@ -186,16 +197,6 @@
       outline:none;
     }
 
-    .form-input::placeholder,
-    .form-textarea::placeholder {
-      color:rgba(148,163,184,0.9);
-    }
-
-    .form-textarea {
-      min-height:60px;
-      resize:vertical;
-    }
-
     .form-footer {
       margin-top:10px;
       display:flex;
@@ -203,17 +204,6 @@
       gap:8px;
       font-size:0.78rem;
       color:rgba(148,163,184,0.95);
-    }
-
-    .form-checkbox-row {
-      display:flex;
-      align-items:flex-start;
-      gap:6px;
-      font-size:0.78rem;
-    }
-
-    .form-checkbox-row input {
-      margin-top:2px;
     }
 
     .btn-row {
@@ -243,14 +233,6 @@
       border:1px solid rgba(148,163,184,0.9);
     }
 
-    .status-msg {
-      margin-top:6px;
-      font-size:0.8rem;
-    }
-    .status-ok { color:#4ade80; }
-    .status-error { color:#f97373; }
-
-    /* GALERÍA */
     .gallery-section-title {
       margin-top:4px;
       font-size:0.9rem;
@@ -265,15 +247,11 @@
     }
 
     @media (max-width:800px) {
-      .gallery {
-        grid-template-columns:repeat(2,minmax(0,1fr));
-      }
+      .gallery { grid-template-columns:repeat(2,minmax(0,1fr)); }
     }
 
     @media (max-width:540px) {
-      .gallery {
-        grid-template-columns:repeat(2,minmax(0,1fr));
-      }
+      .gallery { grid-template-columns:repeat(2,minmax(0,1fr)); }
     }
 
     .thumb {
@@ -284,8 +262,6 @@
       border:1px solid rgba(148,163,184,0.5);
       aspect-ratio:3/4;
       user-select:none;
-      -webkit-user-drag:none;
-      touch-action:none;
     }
 
     .thumb-inner {
@@ -295,7 +271,7 @@
       background-position:center;
       filter:blur(18px);
       transform:scale(1.1);
-      transition:filter 0.4s ease, transform 0.4s ease;
+      transition:0.4s ease;
     }
 
     .thumb.unlocked .thumb-inner {
@@ -316,18 +292,15 @@
     }
 
     .thumb-label {
-      align-self:flex-start;
       padding:3px 7px;
       border-radius:999px;
       border:1px solid rgba(148,163,184,0.7);
       background:rgba(15,23,42,0.96);
       text-transform:uppercase;
       letter-spacing:0.08em;
-      font-size:0.68rem;
     }
 
     .thumb-lock {
-      align-self:flex-start;
       margin-top:4px;
       padding:3px 7px;
       border-radius:999px;
@@ -338,28 +311,11 @@
       gap:4px;
     }
 
-    .thumb-lock span.icon {
-      font-size:0.85rem;
-    }
-
-    .thumb.unlocked .thumb-lock {
-      background:#22c55e;
-      color:#022c22;
-      border-color:rgba(240,253,250,0.95);
-    }
-
     .thumb-footer {
-      align-self:flex-start;
       padding:3px 7px;
       border-radius:999px;
       border:1px solid rgba(148,163,184,0.7);
       background:rgba(15,23,42,0.96);
-    }
-
-    .note {
-      font-size:0.75rem;
-      color:rgba(148,163,184,0.95);
-      margin-top:8px;
     }
 
     footer {
@@ -370,28 +326,20 @@
       color:rgba(148,163,184,0.95);
       border-top:1px solid rgba(15,23,42,0.9);
     }
-
-    img, video {
-      -webkit-user-drag:none;
-      user-select:none;
-      pointer-events:none;
-    }
-
-    .no-select {
-      user-select:none;
-      -webkit-user-select:none;
-      -ms-user-select:none;
-    }
   </style>
 </head>
 <body>
 
-<header class="no-select">
+<header>
   <h1>CoffeXXX</h1>
   <p>Suscripción mensual para acceder al contenido privado de Sofi.</p>
 </header>
 
 <main>
+
+  <!-- LOGO -->
+  <img src="logocoffexxx.webp" class="logo" alt="CoffeXXX">
+
   <!-- INFO SUSCRIPCIÓN -->
   <section>
     <div class="section-title">Suscripción mensual CoffeXXX</div>
@@ -400,182 +348,137 @@
       El acceso se habilita manualmente una vez que se confirma tu pago.
     </p>
 
-    <div class="price-box no-select">
+    <div class="price-box">
       <div>
         <div class="price-main">
           $ 80.000 <span>ARS / suscripción mensual</span>
         </div>
         <div class="price-note">
-          La suscripción es válida por 30 días desde la aprobación. El valor puede actualizarse con el tiempo.
+          La suscripción es válida por 30 días desde la aprobación.
         </div>
       </div>
 
       <div class="catalog-summary">
         <strong>¿Qué incluye CoffeXXX?</strong>
         <ul>
-          <li>Acceso al contenido exclusivo activo durante tu período de suscripción.</li>
-          <li>Actualizaciones dentro del espacio CoffeXXX mientras tu suscripción esté vigente.</li>
-          <li>Todo gestionado mediante un intermediario de pago y habilitación manual.</li>
+          <li>Acceso al contenido exclusivo mientras dure tu suscripción.</li>
+          <li>Actualizaciones dentro del espacio CoffeXXX.</li>
+          <li>Gestión mediante intermediario de pago.</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- FORMULARIO + ALIAS OCULTO -->
+  <!-- FORMULARIO + ALIAS -->
   <section>
     <div class="section-title">Paso 1: completá tus datos</div>
+
     <div class="form-card">
       <form id="requestForm">
         <div class="form-grid">
           <div class="form-field">
-            <label for="nombre">Nombre y apellido *</label>
-            <input id="nombre" name="nombre" class="form-input" type="text" required placeholder="Tu nombre completo">
+            <label>Nombre y apellido *</label>
+            <input id="nombre" class="form-input" required>
           </div>
           <div class="form-field">
-            <label for="contacto">Contacto (Instagram / WhatsApp) *</label>
-            <input id="contacto" name="contacto" class="form-input" type="text" required placeholder="@usuario o número">
+            <label>Contacto (Instagram / WhatsApp) *</label>
+            <input id="contacto" class="form-input" required>
           </div>
           <div class="form-field">
-            <label for="email">Correo electrónico (opcional)</label>
-            <input id="email" name="email" class="form-input" type="email" placeholder="email@ejemplo.com">
+            <label>Email (opcional)</label>
+            <input id="email" class="form-input" type="email">
           </div>
           <div class="form-field">
-            <label for="nota">Mensaje adicional (opcional)</label>
-            <textarea id="nota" name="nota" class="form-textarea" placeholder="Cualquier aclaración que quieras agregar..."></textarea>
+            <label>Mensaje (opcional)</label>
+            <textarea id="nota" class="form-textarea"></textarea>
           </div>
         </div>
 
-        <div class="form-footer">
-          <label class="form-checkbox-row">
-            <input id="acepto" type="checkbox" required>
-            <span>Confirmo que soy mayor de edad y que no compartiré ni revenderé el contenido de CoffeXXX.</span>
-          </label>
+        <label style="display:flex; gap:8px; margin-top:10px;">
+          <input type="checkbox" id="acepto" required>
+          <span>Confirmo que soy mayor de edad y no compartiré el contenido.</span>
+        </label>
+
+        <div class="btn-row">
+          <button type="button" class="btn-secondary" onclick="showAlias()">Ver alias para pagar</button>
+        </div>
+
+        <div id="aliasBox" class="alias-box">
+          <div class="alias-label">Datos de pago</div>
+          <div class="alias-value">Alias: <strong>agusdente</strong></div>
+          <div class="alias-help">
+            Este alias pertenece a un intermediario. El dinero se envía automáticamente a Sofi.
+          </div>
+
+          <div class="form-field" style="margin-top:10px;">
+            <label>Comprobante *</label>
+            <input id="comprobante" class="form-input" required>
+          </div>
 
           <div class="btn-row">
-            <button type="button" class="btn-secondary" onclick="showAlias()">
-              Ver alias para pagar
-            </button>
-          </div>
-
-          <!-- Alias oculto hasta que presionan el botón -->
-          <div id="aliasBox" class="alias-box">
-            <div class="alias-label">Datos para pagar la suscripción</div>
-            <div class="alias-value">Alias: <strong>agusdente</strong></div>
-            <div class="alias-help">
-              Este alias pertenece a un <strong>intermediario de cobro</strong>. El dinero se acredita primero en el intermediario
-              y se <strong>envía automáticamente a la vendedora Sofi</strong>.
-            </div>
-            <div class="alias-warn">
-              Después de pagar, completá el comprobante y enviá tu solicitud para que se apruebe la suscripción.
-            </div>
-
-            <div class="form-field" style="margin-top:10px;">
-              <label for="comprobante">Comprobante de pago *</label>
-              <input id="comprobante" name="comprobante" class="form-input" type="text"
-                     placeholder="N° de operación, captura, detalle del pago...">
-            </div>
-
-            <div class="btn-row">
-              <button type="submit" class="btn-primary">
-                Enviar solicitud de acceso
-              </button>
-            </div>
-          </div>
-
-          <div id="formStatus" class="status-msg"></div>
-          <div class="note">
-            Una vez aprobada tu suscripción en el sistema, el contenido se desbloqueará automáticamente en este navegador.
+            <button type="submit" class="btn-primary">Enviar solicitud</button>
           </div>
         </div>
+
+        <div id="formStatus" style="margin-top:8px;"></div>
+
       </form>
     </div>
   </section>
 
-  <!-- GALERÍA: 6 FOTOS + 1 VIDEO (BLUR AUTOMÁTICO) -->
+  <!-- GALERÍA -->
   <section>
     <div class="gallery-section-title">CoffeXXX (vista previa borrosa)</div>
-    <div class="gallery no-select" id="gallery">
 
-      <!-- FOTO 1 -->
+    <div class="gallery" id="gallery">
+
       <div class="thumb" data-type="image" data-id="1" data-hd="foto1.jpg">
         <div class="thumb-inner" style="background-image:url('foto1.jpg');"></div>
         <div class="thumb-overlay">
           <div>
             <div class="thumb-label">Contenido</div>
-            <div class="thumb-lock">
-              <span class="icon">🔒</span><span class="lock-text">Bloqueado</span>
-            </div>
+            <div class="thumb-lock"><span>🔒</span><span class="lock-text">Bloqueado</span></div>
           </div>
           <div class="thumb-footer">Contenido 1</div>
         </div>
       </div>
 
-      <!-- FOTO 2 -->
       <div class="thumb" data-type="image" data-id="2" data-hd="foto2.jpg">
         <div class="thumb-inner" style="background-image:url('foto2.jpg');"></div>
         <div class="thumb-overlay">
-          <div>
-            <div class="thumb-label">Contenido</div>
-            <div class="thumb-lock">
-              <span class="icon">🔒</span><span class="lock-text">Bloqueado</span>
-            </div>
-          </div>
+          <div><div class="thumb-label">Contenido</div><div class="thumb-lock"><span>🔒</span><span class="lock-text">Bloqueado</span></div></div>
           <div class="thumb-footer">Contenido 2</div>
         </div>
       </div>
 
-      <!-- FOTO 3 -->
       <div class="thumb" data-type="image" data-id="3" data-hd="foto3.jpg">
         <div class="thumb-inner" style="background-image:url('foto3.jpg');"></div>
         <div class="thumb-overlay">
-          <div>
-            <div class="thumb-label">Contenido</div>
-            <div class="thumb-lock">
-              <span class="icon">🔒</span><span class="lock-text">Bloqueado</span>
-            </div>
-          </div>
+          <div><div class="thumb-label">Contenido</div><div class="thumb-lock"><span>🔒</span><span class="lock-text">Bloqueado</span></div></div>
           <div class="thumb-footer">Contenido 3</div>
         </div>
       </div>
 
-      <!-- FOTO 4 -->
       <div class="thumb" data-type="image" data-id="4" data-hd="foto4.jpg">
         <div class="thumb-inner" style="background-image:url('foto4.jpg');"></div>
         <div class="thumb-overlay">
-          <div>
-            <div class="thumb-label">Contenido</div>
-            <div class="thumb-lock">
-              <span class="icon">🔒</span><span class="lock-text">Bloqueado</span>
-            </div>
-          </div>
+          <div><div class="thumb-label">Contenido</div><div class="thumb-lock"><span>🔒</span><span class="lock-text">Bloqueado</span></div></div>
           <div class="thumb-footer">Contenido 4</div>
         </div>
       </div>
 
-      <!-- FOTO 5 -->
       <div class="thumb" data-type="image" data-id="5" data-hd="foto5.jpg">
         <div class="thumb-inner" style="background-image:url('foto5.jpg');"></div>
         <div class="thumb-overlay">
-          <div>
-            <div class="thumb-label">Contenido</div>
-            <div class="thumb-lock">
-              <span class="icon">🔒</span><span class="lock-text">Bloqueado</span>
-            </div>
-          </div>
+          <div><div class="thumb-label">Contenido</div><div class="thumb-lock"><span>🔒</span><span class="lock-text">Bloqueado</span></div></div>
           <div class="thumb-footer">Contenido 5</div>
         </div>
       </div>
 
-      <!-- FOTO 6 -->
       <div class="thumb" data-type="image" data-id="6" data-hd="foto6.jpg">
         <div class="thumb-inner" style="background-image:url('foto6.jpg');"></div>
         <div class="thumb-overlay">
-          <div>
-            <div class="thumb-label">Contenido</div>
-            <div class="thumb-lock">
-              <span class="icon">🔒</span><span class="lock-text">Bloqueado</span>
-            </div>
-          </div>
+          <div><div class="thumb-label">Contenido</div><div class="thumb-lock"><span>🔒</span><span class="lock-text">Bloqueado</span></div></div>
           <div class="thumb-footer">Contenido 6</div>
         </div>
       </div>
@@ -586,34 +489,28 @@
            data-poster="foto6.jpg">
         <div class="thumb-inner" style="background-image:url('foto6.jpg');"></div>
         <div class="thumb-overlay">
-          <div>
-            <div class="thumb-label">Contenido</div>
-            <div class="thumb-lock">
-              <span class="icon">🔒</span><span class="lock-text">Bloqueado</span>
-            </div>
-          </div>
+          <div><div class="thumb-label">Contenido</div><div class="thumb-lock"><span>🔒</span><span class="lock-text">Bloqueado</span></div></div>
           <div class="thumb-footer">Contenido 7</div>
         </div>
       </div>
 
     </div>
 
-    <p class="note">
-      Bloqueamos click derecho y descargas directas, pero ninguna página puede evitar que alguien haga captura de pantalla.
+    <p style="font-size:0.75rem; color:rgba(148,163,184,0.95); margin-top:8px;">
+      Bloqueamos click derecho y descargas directas, pero ninguna página puede evitar capturas de pantalla.
     </p>
+
   </section>
+
 </main>
 
-<footer class="no-select">
-  CoffeXXX · © 2025 · Contenido privado de Sofi. Prohibida su difusión o reventa.
-</footer>
+<footer>CoffeXXX · © 2025 · Contenido privado de Sofi.</footer>
 
-<!-- Firebase compat -->
+<!-- Firebase (SIN CONFIG TODAVÍA) -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
 <script>
-  // === COMPLETAR CON TU CONFIG DE FIREBASE ===
   const firebaseConfig = {
     apiKey: "TU_API_KEY",
     authDomain: "TU_PROYECTO.firebaseapp.com",
@@ -627,148 +524,101 @@
   const db = firebase.firestore();
 
   const STORAGE_KEY = "coffexxx_request_id_v1";
+  let aliasVisible = false;
+  let unsubscribeDoc = null;
 
   document.addEventListener("contextmenu", e => e.preventDefault());
   document.addEventListener("dragstart", e => e.preventDefault());
 
-  let aliasVisible = false;
-  let unsubscribeDoc = null;
-
   function applyUnlockedState() {
-    const gallery = document.getElementById("gallery");
-    if (!gallery) return;
-    const thumbs = gallery.querySelectorAll(".thumb");
-
-    thumbs.forEach(thumb => {
-      const type = thumb.getAttribute("data-type");
-      const lockText = thumb.querySelector(".lock-text");
-
+    document.querySelectorAll(".thumb").forEach(thumb => {
+      const type = thumb.dataset.type;
       thumb.classList.add("unlocked");
 
-      if (lockText) lockText.textContent = "Desbloqueado";
-
       if (type === "image") {
-        const hdUrl = thumb.getAttribute("data-hd");
-        const inner = thumb.querySelector(".thumb-inner");
-        if (inner && hdUrl) {
-          inner.style.backgroundImage = "url('" + hdUrl + "')";
-        }
+        const hd = thumb.dataset.hd;
+        thumb.querySelector(".thumb-inner").style.backgroundImage = `url('${hd}')`;
       }
 
       if (type === "video") {
-        const videoSrc = thumb.getAttribute("data-video");
-        const poster = thumb.getAttribute("data-poster");
-        if (videoSrc) {
-          thumb.innerHTML = `
-            <video controls playsinline controlsList="nodownload"
-                   style="width:100%;height:100%;display:block;object-fit:cover;border-radius:12px;"
-                   poster="${poster || ''}">
-              <source src="${videoSrc}" type="video/mp4">
-              Tu navegador no soporta la reproducción de video.
-            </video>
-          `;
-        }
+        const src = thumb.dataset.video;
+        const poster = thumb.dataset.poster;
+        thumb.innerHTML = `
+          <video controls playsinline controlsList="nodownload" 
+                 style="width:100%;height:100%;object-fit:cover;border-radius:12px;"
+                 poster="${poster}">
+            <source src="${src}" type="video/mp4">
+          </video>
+        `;
       }
     });
   }
 
-  function listenToRequest(requestId) {
-    if (!requestId) return;
+  function listenToRequest(id) {
     if (unsubscribeDoc) unsubscribeDoc();
-
-    unsubscribeDoc = db.collection("suscripciones").doc(requestId)
-      .onSnapshot(doc => {
-        if (!doc.exists) return;
-        const data = doc.data();
-        if (data.desbloqueado) {
-          applyUnlockedState();
-          const status = document.getElementById("formStatus");
-          if (status) {
-            status.textContent = "Tu suscripción CoffeXXX fue aprobada. Contenido desbloqueado ✅";
-            status.className = "status-msg status-ok";
-          }
-        }
-      });
+    unsubscribeDoc = db.collection("suscripciones").doc(id).onSnapshot(doc => {
+      if (doc.exists && doc.data().desbloqueado === true) {
+        applyUnlockedState();
+        const status = document.getElementById("formStatus");
+        status.textContent = "Suscripción aprobada. Contenido desbloqueado ✓";
+        status.style.color = "#4ade80";
+      }
+    });
   }
 
   document.addEventListener("DOMContentLoaded", () => {
-    const existingId = localStorage.getItem(STORAGE_KEY);
-    if (existingId) listenToRequest(existingId);
+    const id = localStorage.getItem(STORAGE_KEY);
+    if (id) listenToRequest(id);
   });
 
   function showAlias() {
-    const nombre = document.getElementById("nombre").value.trim();
-    const contacto = document.getElementById("contacto").value.trim();
+    const nombre = nombre.value.trim();
+    const contacto = contacto.value.trim();
     const acepto = document.getElementById("acepto").checked;
     const status = document.getElementById("formStatus");
 
     if (!nombre || !contacto || !acepto) {
-      status.textContent = "Completá nombre, contacto y aceptá las condiciones antes de ver el alias.";
-      status.className = "status-msg status-error";
+      status.textContent = "Completá datos y aceptá condiciones primero.";
+      status.style.color = "#f97373";
       return;
     }
 
-    const aliasBox = document.getElementById("aliasBox");
     aliasBox.style.display = "block";
     aliasVisible = true;
-    status.textContent = "Alias visible. Realizá el pago y luego completá el comprobante.";
-    status.className = "status-msg status-ok";
+    status.textContent = "Alias visible. Realizá el pago.";
+    status.style.color = "#4ade80";
   }
 
-  const form = document.getElementById("requestForm");
-  const formStatus = document.getElementById("formStatus");
-
-  form.addEventListener("submit", async (e) => {
+  requestForm.onsubmit = async(e) => {
     e.preventDefault();
-    if (!formStatus) return;
-
-    const nombre = document.getElementById("nombre").value.trim();
-    const contacto = document.getElementById("contacto").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const nota = document.getElementById("nota").value.trim();
-    const comprobante = document.getElementById("comprobante").value.trim();
-    const acepto = document.getElementById("acepto").checked;
+    const status = document.getElementById("formStatus");
 
     if (!aliasVisible) {
-      formStatus.textContent = "Primero presioná en 'Ver alias para pagar', realizá el pago y luego enviá la solicitud.";
-      formStatus.className = "status-msg status-error";
+      status.textContent = "Primero presioná 'Ver alias para pagar'.";
+      status.style.color = "#f97373";
       return;
     }
 
-    if (!nombre || !contacto || !comprobante || !acepto) {
-      formStatus.textContent = "Completá todos los datos obligatorios y el comprobante de pago.";
-      formStatus.className = "status-msg status-error";
-      return;
-    }
+    const data = {
+      nombre: nombre.value.trim(),
+      contacto: contacto.value.trim(),
+      email: email.value.trim() || null,
+      nota: nota.value.trim() || null,
+      comprobante: comprobante.value.trim(),
+      creado: firebase.firestore.FieldValue.serverTimestamp(),
+      origen: "CoffeXXX",
+      monto: 80000,
+      moneda: "ARS",
+      desbloqueado: false
+    };
 
-    formStatus.textContent = "Enviando solicitud...";
-    formStatus.className = "status-msg";
+    const docRef = await db.collection("suscripciones").add(data);
+    localStorage.setItem(STORAGE_KEY, docRef.id);
+    listenToRequest(docRef.id);
 
-    try {
-      const docRef = await db.collection("suscripciones").add({
-        nombre,
-        contacto,
-        email: email || null,
-        nota: nota || null,
-        comprobante,
-        creado: firebase.firestore.FieldValue.serverTimestamp(),
-        origen: "CoffeXXX",
-        monto: 80000,
-        moneda: "ARS",
-        desbloqueado: false
-      });
-
-      localStorage.setItem(STORAGE_KEY, docRef.id);
-      listenToRequest(docRef.id);
-
-      formStatus.textContent = "Solicitud enviada. Cuando Sofi apruebe tu suscripción, el contenido se desbloqueará en este navegador ✅";
-      formStatus.className = "status-msg status-ok";
-    } catch (err) {
-      console.error(err);
-      formStatus.textContent = "Hubo un error al enviar tu solicitud. Probá de nuevo en unos minutos.";
-      formStatus.className = "status-msg status-error";
-    }
-  });
+    status.textContent = "Solicitud enviada. Se desbloqueará cuando Sofi la apruebe ✓";
+    status.style.color = "#4ade80";
+  };
 </script>
 
 </body>
