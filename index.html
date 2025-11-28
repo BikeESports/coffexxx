@@ -486,7 +486,7 @@
     updateAuthUI();
   });
 
-  authSubmit.addEventListener("click", async () => {
+    authSubmit.addEventListener("click", async () => {
     const email = authEmail.value.trim();
     const pass  = authPass.value.trim();
     const name  = authName.value.trim();
@@ -506,20 +506,31 @@
         authStatus.textContent = "";
       } else {
         authStatus.textContent = "Creando cuenta...";
+
+        // crea el usuario en Auth
         const cred = await auth.createUserWithEmailAndPassword(email, pass);
 
-        // nombre visible en el perfil de Firebase Auth
+        // nombre para el perfil
         if (name) {
           await cred.user.updateProfile({ displayName: name });
         }
 
-        // 💾 guardar usuario en Firestore (colección "usuarios")
+        // 💾 GUARDA EL USUARIO EN FIRESTORE (colección "usuarios")
         await db.collection("usuarios").doc(cred.user.uid).set({
           uid: cred.user.uid,
           nombre: name || null,
           email: email,
           creado: firebase.firestore.FieldValue.serverTimestamp()
         });
+
+        authStatus.textContent = "Cuenta creada. Ya podés solicitar acceso.";
+      }
+    } catch (err) {
+      console.error(err);
+      authStatus.textContent = "Firebase: " + (err.message || "Error en autenticación.");
+      authStatus.style.color = "#f97373";
+    }
+  });
 
         authStatus.textContent = "Cuenta creada. Ya podés solicitar acceso.";
       }
